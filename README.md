@@ -19,7 +19,7 @@
 
 - Cuando tengas turnos ingresados en el sistema puedes mediante varios filtros facilitar la búsqueda de los mismos
 
-![](https://raw.githubusercontent.com/facc15/clinica-online/main/src/assets/capturas/filtros.png)
+![](https://github.com/facc15/clinica-online/blob/main/src/assets/capturas/filtros.png)
 
 - Cuando los turnos se encuentren finalizados podrás tener acceso a la historia clinica.
 
