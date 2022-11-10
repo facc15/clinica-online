@@ -1,0 +1,27 @@
+ <div class="bg-light text-dark" style="width:200px; height: 150px;"  *ngIf="!this.spinner && !this.esCorrecto && !this.esIncorrecto">
+  <h4 class="text-primary text-center">miCAPTCHA <img src="../../../assets/icos/captcha.png" width="30" height="30" alt=""></h4>
+  <div class="text-center">Resuelva la operación:</div>
+  <div class="text-center">
+  <span>{{this.numero}}</span> + <span>{{this.numero2}}: &nbsp; &nbsp; </span>
+  <input  type="text" style="width:70px;" [(ngModel)]="this.resultadoElegido">
+  <button class="btn bg-primary btn-block mt-1 text-center" (click)="calcular()">Calcular</button>
+  </div>
+
+</div>
+
+<div class="bg-light text-dark align-items-center justify-content-center d-flex" style="width:200px; height: 150px;" *ngIf="this.spinner">
+<app-spinner [color]="'azul'"></app-spinner>
+
+</div>
+
+<div class="bg-light text-dark align-items-center justify-content-center d-flex" style="width:200px; height: 150px;" *ngIf="!this.spinner && this.esCorrecto">
+  <img src="../../../assets/icos/aceptado.png" width="30" height="30" alt="">
+
+</div>
+
+<div class="bg-light text-dark align-items-center justify-content-center d-flex" style="width:200px; height: 150px;" *ngIf="!this.spinner && this.esIncorrecto">
+  <img src="../../../assets/icos/rechazado.png" width="30" height="30" alt="">
+
+</div>
+
+

@@ -1,0 +1,54 @@
+<div class="row align-items-center d-flex justify-content-center" >
+  <div class="col-10 text-center">
+
+  <h3>Que le pareció la atención?</h3>
+
+  </div>
+  <br>
+</div>
+<form [formGroup]="this.form" (ngSubmit)="confirmar()">
+<div class="row align-items-center d-flex justify-content-center">
+<div class="col-12 text-center">
+  <h5>Puntuación:</h5>
+</div>
+</div>
+<div class="row align-items-center d-flex justify-content-center">
+  <div class="col-6 text-center">
+    <select class="form-control text-dark" (change)="capturarSeleccion($event)">
+
+      <option *ngFor="let item of this.puntuaciones" class="text-center">
+        {{item}}
+      </option>
+    </select>
+  </div>
+</div>
+<br>
+<div class="row align-items-center d-flex justify-content-center">
+<div class="col-12 text-center">
+  <h5>Deje un comentario de la atención recibida:</h5>
+</div>
+</div>
+<div class="row align-items-center d-flex justify-content-center">
+  <div class="col-12 text-center">
+    <textarea type="text" cols="30" rows="10" formControlName="devolucion"></textarea>
+  </div>
+</div>
+<br>
+<div class="row align-items-center d-flex justify-content-center">
+  <div class="col-3 text-center">
+    <button type="submit" class="btn btn-success" [disabled]="this.form.invalid" >
+     Confirmar
+    </button>
+  </div>
+</div>
+<br>
+<div class="row align-items-center d-flex justify-content-center">
+  <div class="col-3 text-center">
+    <button type="submit" class="btn btn-danger"  (click)="volver()">
+     Volver
+    </button>
+  </div>
+</div>
+
+</form>
+

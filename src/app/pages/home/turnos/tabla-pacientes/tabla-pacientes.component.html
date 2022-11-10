@@ -1,0 +1,76 @@
+<!--POR ESPECIALISTA-->
+<div *ngIf="this.pacientesDeUnEspecialista">
+  <div class="row bg-dark text-center text-white">
+    <strong>Seleccionar paciente</strong>
+  </div>
+
+  <div class="row" style="overflow-y: scroll;">
+    <table class="table table-dark table-hover text-center">
+      <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+      </tr>
+    </thead>
+      <tbody>
+
+      <tr *ngFor="let paciente of this.listaPacientes | filtroPacientes" (click)="elegirPaciente(paciente)" style="cursor: pointer;">
+        <td>{{paciente.nombre}}</td>
+        <td>{{paciente.apellido}}</td>
+      </tr>
+      </tbody>
+      </table>
+  </div>
+</div>
+
+<!--DE UN ADMINISTRADOR-->
+<div *ngIf="this.pacientesDeUnAdministrador">
+  <div class="row bg-dark text-center text-white">
+    <strong>Seleccionar paciente</strong>
+  </div>
+
+  <div class="row" style="height: 200px; overflow-y: scroll;">
+    <table class="table table-dark table-hover text-center">
+      <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+      </tr>
+    </thead>
+      <tbody>
+
+      <tr *ngFor="let paciente of this.listaPacientes" (click)="elegirPaciente(paciente)" style="cursor: pointer;">
+        <td>{{paciente.nombre}}</td>
+        <td>{{paciente.apellido}}</td>
+      </tr>
+      </tbody>
+      </table>
+  </div>
+</div>
+
+
+
+<!--PACIENTES ATENDIDOS DE UN ESPECIALISTA-->
+<div *ngIf="!this.pacientesDeUnEspecialista && !this.pacientesDeUnAdministrador">
+  <div class="row bg-dark text-center text-white">
+    <strong>Seleccionar paciente</strong>
+  </div>
+
+  <div class="row" style="overflow-y: scroll;">
+    <table class="table table-dark table-hover text-center">
+      <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+      </tr>
+    </thead>
+      <tbody>
+
+      <tr *ngFor="let paciente of this.listaPacientes | filtroPacientesEspecialista" (click)="elegirPaciente(paciente)" style="cursor: pointer;">
+        <td>{{paciente.nombre}}</td>
+        <td>{{paciente.apellido}}</td>
+      </tr>
+      </tbody>
+      </table>
+  </div>
+</div>

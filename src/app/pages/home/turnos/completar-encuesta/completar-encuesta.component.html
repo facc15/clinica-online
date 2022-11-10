@@ -1,0 +1,48 @@
+
+
+  <div class="row align-items-center d-flex justify-content-center" >
+      <div class="col-10 text-center">
+
+      <h3>Complete la encuesta para una mejor atención</h3>
+
+      </div>
+  </div>
+<form [formGroup]="this.form" (ngSubmit)="confirmar()">
+  <div class="row align-items-center d-flex justify-content-center">
+    <div class="col-12 text-center">
+      <h5>{{this.pregunta1}}</h5>
+    </div>
+</div>
+  <div class="row align-items-center d-flex justify-content-center">
+      <div class="col-12 text-center">
+        <input type="text" formControlName="respuesta1">
+      </div>
+  </div>
+  <div class="row align-items-center d-flex justify-content-center">
+    <div class="col-12 text-center">
+      <h5>{{this.pregunta2}}</h5>
+    </div>
+</div>
+  <div class="row align-items-center d-flex justify-content-center">
+      <div class="col-12 text-center">
+        <input type="text" formControlName="respuesta2">
+      </div>
+  </div>
+  <br>
+  <div class="row align-items-center d-flex justify-content-center">
+      <div class="col-3 text-center">
+        <button type="submit" class="btn btn-success" [disabled]="this.form.invalid" >
+         Confirmar
+        </button>
+      </div>
+  </div>
+  <br>
+  <div class="row align-items-center d-flex justify-content-center">
+      <div class="col-3 text-center">
+        <button type="submit" class="btn btn-danger"  (click)="volver()">
+         Volver
+        </button>
+      </div>
+  </div>
+
+</form>

@@ -1,0 +1,108 @@
+<!--PACIENTE-->
+<div class="container">
+  <div class="row justify-content-center align-items-center" style="height:80px;">
+
+    <div class="borde col-8 bg-success text-light text-center">
+      <h3>Historia clínica</h3>
+    </div>
+  </div>
+  <div class="bg-dark" style="overflow-y: scroll; height: 600px;">
+   <div *ngFor="let item of this.turnos">
+      <div class="row justify-content-center align-items-center" style="height:50px;">
+
+            <div class="borde col-8 bg-success text-light text-center">
+           <h4>Turno Fecha {{item.fecha.dia}} {{item.fecha.diaNumero}} de {{item.fecha.mes}}</h4>
+           </div>
+      </div>
+
+      <div class="row justify-content-center align-items-center" style="height:30px;">
+        <div class="borde col-4 bg-success text-light text-center">
+        <strong><h5>Especialista</h5></strong>
+       </div>
+        <div class="borde col-4 bg-success text-light text-center">
+         <h5>{{item.especialista}}</h5>
+        </div>
+      </div>
+
+      <div class="row justify-content-center align-items-center" style="height:30px;">
+        <div class="borde col-4 bg-success text-light text-center">
+          <strong><h5>Estado de turno</h5></strong>
+       </div>
+        <div class="borde col-4 bg-success text-light text-center">
+         <h5>{{item.estado}}</h5>
+        </div>
+      </div>
+
+      <div class="row justify-content-center align-items-center" style="height:30px;">
+        <div class="borde col-4 bg-success text-light text-center">
+          <strong><h5>altura</h5></strong>
+       </div>
+        <div class="borde col-4 bg-success text-light text-center">
+         <h5>{{item.historiaClinica.altura}}</h5>
+        </div>
+      </div>
+
+      <div class="row justify-content-center align-items-center" style="height:30px;">
+        <div class="borde col-4 bg-success text-light text-center">
+        <strong> <h5>peso</h5></strong>
+       </div>
+        <div class="borde col-4 bg-success text-light text-center">
+         <h5>{{item.historiaClinica.peso}}</h5>
+        </div>
+      </div>
+
+      <div class="row justify-content-center align-items-center" style="height:30px;">
+        <div class="borde col-4 bg-success text-light text-center">
+          <strong> <h5>presión</h5></strong>
+       </div>
+        <div class="borde col-4 bg-success text-light text-center">
+         <h5>{{item.historiaClinica.presion}}</h5>
+        </div>
+      </div>
+
+      <div class="row justify-content-center align-items-center" style="height:30px;">
+        <div class="borde col-4 bg-success text-light text-center">
+          <strong><h5>temperatura</h5></strong>
+       </div>
+        <div class="borde col-4 bg-success text-light text-center">
+         <h5>{{item.historiaClinica.temperatura}}</h5>
+        </div>
+      </div>
+
+      <div class="row justify-content-center align-items-center" *ngIf="item.historiaClinica.datoDinamico1.clave" style="height:30px;">
+        <div class="borde col-4 bg-success text-light text-center">
+          <strong><h5>{{item.historiaClinica.datoDinamico1.clave}}</h5></strong>
+       </div>
+        <div class="borde col-4 bg-success text-light text-center">
+         <h5>{{item.historiaClinica.datoDinamico1.valor}}</h5>
+        </div>
+      </div>
+
+      <div class="row justify-content-center align-items-center" *ngIf="item.historiaClinica.datoDinamico2.clave" style="height:30px;">
+        <div class="borde col-4 bg-success text-light text-center">
+          <strong><h5>{{item.historiaClinica.datoDinamico2.clave}}</h5></strong>
+       </div>
+        <div class="borde col-4 bg-success text-light text-center">
+         <h5>{{item.historiaClinica.datoDinamico2.valor}}</h5>
+        </div>
+      </div>
+
+      <div class="row justify-content-center align-items-center" *ngIf="item.historiaClinica.datoDinamico3.clave" style="height:30px;">
+        <div class="borde col-4 bg-success text-light text-center">
+          <strong><h5>{{item.historiaClinica.datoDinamico3.clave}}</h5></strong>
+       </div>
+        <div class="borde col-4 bg-success text-light text-center">
+         <h5>{{item.historiaClinica.datoDinamico3.valor}}</h5>
+        </div>
+      </div>
+
+      <br>
+    </div>
+  </div>
+
+
+    <div class="justify-content-center align-items-center text-center">
+      <button class="btn btn-danger text-center" (click)="volver()">Volver</button>
+    </div>
+
+</div>

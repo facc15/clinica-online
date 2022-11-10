@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~ngx-toastr/toastr';
+
+
+
+
+
+
+
+.toast-success{background-color:#51A351!important;}
+.toast-error{background-color:#BD362F!important;}
+.toast-info{background-color:#2F96B4!important;}
+.toast-warning{background-color:#F89406!important;}
+
+
+body{
+
+    padding:0;
+    margin:0;
+    background-image:url(./assets/verde.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}

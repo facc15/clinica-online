@@ -1,0 +1,9 @@
+.verHistoria:active{
+  transform: scale(0.94);
+
+}
+
+.verHistoria{
+  cursor:pointer;
+}
+

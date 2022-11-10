@@ -1,0 +1,92 @@
+<div class="container">
+
+  <div class="row align-items-center d-flex justify-content-center" >
+      <div class="col-10 text-center">
+      <h3>COMPLETAR HISTORIA CLÍNICA</h3>
+      </div>
+  </div>
+<form [formGroup]="this.form">
+
+  <div class="row align-items-center d-flex justify-content-center">
+      <div class="col-12 text-center">
+        Altura (cm): <input type="number"  formControlName="altura">
+   &nbsp; <span *ngIf="this.form.get('altura')?.hasError('max') || this.form.get('altura')?.hasError('min')" class="text-danger">
+            Altura inválida
+          </span>
+      </div>
+  </div>
+  <div class="row align-items-center d-flex justify-content-center">
+    <div class="col-12 text-center">
+      Peso (kg): <input type="number"  formControlName="peso">
+      &nbsp; <span *ngIf="this.form.get('peso')?.hasError('max') || this.form.get('peso')?.hasError('min')" class="text-danger">
+        Peso inválido
+      </span>
+    </div>
+</div>
+<div class="row align-items-center d-flex justify-content-center">
+  <div class="col-12 text-center">
+    Temperatura (°): <input type="number"formControlName="temperatura">
+    &nbsp; <span *ngIf="this.form.get('temperatura')?.hasError('max') || this.form.get('temperatura')?.hasError('min')" class="text-danger">
+      Temperatura inválida
+    </span>
+  </div>
+
+</div>
+<div class="row align-items-center d-flex justify-content-center">
+  <div class="col-12 text-center">
+    Presión (mm Hg): <input type="text"  formControlName="presion">
+
+  </div>
+</div>
+<div *ngIf="this.mostrarDato1" class="row align-items-center d-flex justify-content-center">
+  <div class="col-4 text-center">
+    Clave: <input type="text"  formControlName="clave1">
+  </div>
+  <div class="col-4 text-center">
+    Valor: <input type="text"  formControlName="valor1">
+  </div>
+</div>
+<div *ngIf="this.mostrarDato2" class="row align-items-center d-flex justify-content-center">
+  <div class="col-4 text-center">
+    Clave: <input type="text"  formControlName="clave2">
+  </div>
+  <div class="col-4 text-center">
+    Valor: <input type="text"  formControlName="valor2">
+  </div>
+</div>
+<div *ngIf="this.mostrarDato3" class="row align-items-center d-flex justify-content-center">
+  <div class="col-4 text-center">
+    Clave: <input type="text"  formControlName="clave3">
+  </div>
+  <div class="col-4 text-center">
+    Valor: <input type="text"  formControlName="valor3">
+  </div>
+</div>
+<br>
+<div *ngIf="!this.mostrarDato3" class="row align-items-center d-flex justify-content-center">
+  <div class="col-12 text-center">
+    <button class="btn btn-dark" (click)="agregarDato()">Agregar dato</button>
+  </div>
+</div>
+
+<br>
+  <div class="row align-items-center d-flex justify-content-center">
+      <div class="col-3 text-center">
+        <button type="button" class="btn btn-success" (click)="confirmar()" [disabled]="this.form.invalid" >
+         Confirmar
+        </button>
+      </div>
+  </div>
+  <br>
+  <div class="row align-items-center d-flex justify-content-center">
+      <div class="col-3 text-center">
+        <button type="submit" class="btn btn-danger"  (click)="volver()">
+         Volver
+        </button>
+      </div>
+  </div>
+
+</form>
+
+
+</div>

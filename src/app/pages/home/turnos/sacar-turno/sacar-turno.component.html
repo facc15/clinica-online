@@ -1,0 +1,127 @@
+<div class="row  d-flex justify-content-center" style="height:100px;" *ngIf="this.spinner">
+  <div class="col-12 justify-content-center d-flex align-items-center" style="height:600px;">
+
+        <app-spinner [color]="'verde'"></app-spinner>
+ </div>
+</div>
+<div *ngIf="this.miUsuario.perfil=='paciente' && !this.spinner">
+  <div class="row  d-flex justify-content-center" style="height:100px;">
+
+    <div class="col-12 justify-content-center d-flex align-items-center bg-success" style="height:100px;">
+        <button class="btn btn-dark " routerLink="../../">Volver</button>
+     </div>
+  </div>
+
+
+<div class="row bg-success text-white text-center d-flex justify-content-center align-items-center h-25">
+
+  <h2 class="" style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
+    Solicitar turno
+  </h2>
+
+</div>
+
+  <div class="row justify-content-center d-flex" *ngIf="!this.porEspecialidad && !this.porEspecialista && !this.elegirDia && !this.elegirHorario">
+
+    <div class="col-5 h-25">
+      <button class="btn btn-info btn-lg" (click)="buscarPorEspecialista()">Buscar por especialista</button>
+    </div>
+
+    <div class="col-5 h-25">
+      <button class="btn btn-dark btn-lg"  (click)="buscarPorEspecialidad()">Buscar por especialidad</button>
+    </div>
+  </div>
+
+  <div class="row justify-content-center d-flex" *ngIf="this.porEspecialidad">
+    <div class="col-8">
+    <app-tabla-especialidad (eventoEspecialidadSeleccionada)="seleccionarEspecialista($event)" [especialista]="this.especialistaSeleccionado"></app-tabla-especialidad>
+    </div>
+  </div>
+
+  <div class="row justify-content-center d-flex" *ngIf="this.porEspecialista">
+    <div class="col-8">
+    <app-tabla-especialistas (eventoEspecialistaSeleccionado)="seleccionarEspecialidad($event)" [especialidad]="this.especialidadSeleccionada"></app-tabla-especialistas>
+    </div>
+  </div>
+
+  <div class="row justify-content-center d-flex" *ngIf="this.elegirDia">
+    <div class="col-8">
+    <app-tabla-fechas (eventoFechaSeleccionada)="seleccionarHorario($event)"></app-tabla-fechas>
+    </div>
+  </div>
+
+  <div class="row justify-content-center d-flex" *ngIf="this.elegirHorario">
+    <div class="col-8">
+    <app-tabla-horarios [especialistaSeleccionado]="this.especialistaSeleccionado" (eventoHorarioSeleccionado)="solicitarTurno($event)" [fechaSeleccionada]="this.fechaSeleccionada"></app-tabla-horarios>
+    </div>
+  </div>
+
+
+
+</div>
+
+<!--ADMINISTRADOR-->
+
+<div *ngIf="this.miUsuario.perfil=='administrador'  && !this.spinner">
+  <div class="row  d-flex justify-content-center" style="height:100px;">
+
+    <div class="col-12 justify-content-center d-flex align-items-center bg-success" style="height:100px;">
+        <button class="btn btn-dark " routerLink="../../">Volver</button>
+     </div>
+  </div>
+
+
+  <div class="row bg-success text-white text-center d-flex justify-content-center align-items-center h-25">
+
+    <h2 class="" style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
+      Solicitar turno
+    </h2>
+
+  </div>
+
+    <div class="row justify-content-center d-flex" *ngIf="!this.porEspecialidad && !this.porEspecialista && !this.porPaciente && !this.elegirDia && !this.elegirHorario">
+
+      <div class="col-5 h-25">
+        <button class="btn btn-info btn-lg" (click)="buscarPorEspecialista()">Buscar por especialista</button>
+      </div>
+
+      <div class="col-5 h-25">
+        <button class="btn btn-dark btn-lg"  (click)="buscarPorEspecialidad()">Buscar por especialidad</button>
+      </div>
+    </div>
+
+    <div class="row justify-content-center d-flex" *ngIf="this.porEspecialidad">
+      <div class="col-8">
+      <app-tabla-especialidad (eventoEspecialidadSeleccionada)="seleccionarEspecialista($event)" [especialista]="this.especialistaSeleccionado"></app-tabla-especialidad>
+      </div>
+    </div>
+
+    <div class="row justify-content-center d-flex" *ngIf="this.porPaciente">
+      <div class="col-8">
+      <app-tabla-pacientes [pacientesDeUnAdministrador]="true" (eventoPacienteSeleccionado)="seleccionarPaciente($event)"></app-tabla-pacientes>
+      </div>
+    </div>
+
+    <div class="row justify-content-center d-flex" *ngIf="this.porEspecialista">
+      <div class="col-8">
+      <app-tabla-especialistas (eventoEspecialistaSeleccionado)="seleccionarEspecialidad($event)" [especialidad]="this.especialidadSeleccionada"></app-tabla-especialistas>
+      </div>
+    </div>
+
+
+
+    <div class="row justify-content-center d-flex" *ngIf="this.elegirDia">
+      <div class="col-8">
+      <app-tabla-fechas (eventoFechaSeleccionada)="seleccionarHorario($event)"></app-tabla-fechas>
+      </div>
+    </div>
+
+    <div class="row justify-content-center d-flex" *ngIf="this.elegirHorario">
+      <div class="col-8">
+      <app-tabla-horarios (eventoHorarioSeleccionado)="solicitarTurno($event)" [fechaSeleccionada]="this.fechaSeleccionada"></app-tabla-horarios>
+      </div>
+    </div>
+
+
+
+  </div>

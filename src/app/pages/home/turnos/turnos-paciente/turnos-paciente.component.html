@@ -1,0 +1,45 @@
+
+  <div class="row align-items-center d-flex justify-content-center" *ngIf="!this.verRese && !this.modificando && !this.completaHistoriaClinica">
+
+    <div class="col-10">
+              <h2 *ngIf="this.turnos.length == 0" class="mt-3 text-light">No hay turnos</h2>
+        <div *ngIf="this.turnos.length>0">
+            <table class="table table-dark table-hover text-center">
+              <thead>
+               <tr>
+               <th>Fecha</th>
+                <th>Paciente</th>
+                <th>Estado</th>
+
+             </tr>
+              </thead>
+             <tbody>
+
+               <tr *ngFor="let turno of this.turnosFiltrados | turnosEspecialista" style="cursor: pointer;">
+                   <td>{{turno.fecha.dia}} {{turno.fecha.diaNumero}} de {{turno.fecha.mes}}, a las {{turno.fecha.hora}}hs</td>
+                   <td>{{turno.paciente}}</td>
+                   <td>{{turno.estado}}</td>
+                   <th><button class="btn btn-danger" *ngIf="turno.estado=='pendiente'" (click)="cancelarElTurno(turno)">Cancelar</button></th>
+                   <th><button class="btn btn-warning" *ngIf="turno.estado=='pendiente'" (click)="rechazarTurno(turno)">Rechazar turno</button></th>
+                   <th><button class="btn btn-primary" *ngIf="turno.estado=='pendiente'" (click)="aceptarTurno(turno)">Aceptar turno</button></th>
+                   <th><button class="btn btn-info" *ngIf="turno.estado=='aceptado'" (click)="finalizarTurno(turno)">Finalizar turno</button></th>
+                   <th><button class="btn btn-success" *ngIf="turno.estado=='cancelado' || turno.estado=='rechazado'" (click)="verResenia(turno)">Ver reseña</button></th>
+                </tr>
+                </tbody>
+              </table>
+          </div>
+
+      </div>
+
+
+
+
+  </div>
+
+  <app-modificar-turno *ngIf="this.modificando" [usuario]="this.auth.usuario" [turno]="this.turnoElegido" [rechazado]="this.rechazado" [cancelado]="this.cancelado" [aceptado]="this.aceptado" [finalizado]="this.finalizado" (eventoVolver)="volver()"  (eventoTurnoModificado)="modificado($event)"></app-modificar-turno>
+
+  <app-ver-resenia *ngIf="this.verRese" [turno]="this.turnoElegido"  (eventoVolver)="volver()"></app-ver-resenia>
+
+
+  <app-historia-clinica *ngIf="this.completaHistoriaClinica" [turno]="this.turnoElegido" (eventoTurnoModificado)="modificado($event)" (eventoVolver)="volver()"></app-historia-clinica>
+

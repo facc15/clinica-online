@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "tp-clinica-ff055"
+  },
+  "targets": {
+    "tp-clinica-ff055": {
+      "hosting": {
+        "clinica": [
+          "tp-clinica-ff055"
+        ]
+      }
+    }
+  }
+}

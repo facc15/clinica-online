@@ -1,0 +1,256 @@
+  <div class="row  d-flex justify-content-center" style="height:100px;" *ngIf="this.spinner" >
+
+
+    <div class="col-12 justify-content-center d-flex align-items-center" style="height:600px;">
+
+          <app-spinner [color]="'verde'"></app-spinner>
+   </div>
+</div>
+
+<!--PACIENTE-->
+<div *ngIf="this.auth.usuario.perfil=='paciente' && !this.spinner">
+
+
+    <div class="row  d-flex justify-content-center" style="height:80px;">
+
+      <div class="col-12 justify-content-center d-flex align-items-center bg-success" style="height:80px;">
+          <button class="btn btn-dark " routerLink="../../home">Volver</button>
+       </div>
+    </div>
+
+    <div class="row  d-flex justify-content-center" style="height:100px;">
+      <div class="col-8 bg-dark d-flex justify-content-center align-items-center text-center">
+      <label for="busqueda" class="text-light">Realizar búsqueda por:</label> &nbsp;
+      <select name="busqueda" (change)="buscar($event)" value="Busqueda">
+        <option></option>
+        <option value="especialidad">Especialidad</option>
+        <option value="especialista">Especialista</option>
+        <option value="fecha">Fecha</option>
+        <option value="estado">Estado del turno</option>
+        <option value="historia">Historia clinica</option>
+      </select>
+      </div>
+     </div>
+
+
+    <div class="row  d-flex justify-content-center" style="height:100px;">
+
+        <!--POR ESTADO-->
+        <div class="col-12" *ngIf="this.porEstado">
+          <app-tabla-turnos [porEstado]="true" [paciente]="this.paciente" (eventoEstadoSeleccionado)="estadoSeleccionado($event)"></app-tabla-turnos>
+        </div>
+
+        <div class="col-12" *ngIf="this.mostrarTurnosPorEstado">
+          <app-turnos-especialidad [turnos]="this.turnos"  [esPaciente]="true" [estado]="this.estado" (eventoTurnoModificado)="modificar($event)"></app-turnos-especialidad>
+        </div>
+
+         <!--POR FECHAS-->
+         <div class="col-12" *ngIf="this.porFecha">
+          <app-tabla-turnos [porFecha]="true" [paciente]="this.paciente" (eventoFechaSeleccionada)="fechaSeleccionada($event)"></app-tabla-turnos>
+        </div>
+
+        <div class="col-12" *ngIf="this.mostrarTurnosPorFecha">
+          <app-turnos-especialidad [turnos]="this.turnos"  [esPaciente]="true" [fecha]="this.fecha" (eventoTurnoModificado)="modificar($event)"></app-turnos-especialidad>
+        </div>
+
+        <!--POR HISTORIA CLINICA-->
+
+        <div class="col-12" *ngIf="this.porHistoriaClinica">
+          <app-tabla-turnos [porHistoriaClinica]="true" [paciente]="this.paciente" (eventoHistoriaClinicaSeleccionada)="turnoPorHistoriaClinicaSeleccionada($event)"></app-tabla-turnos>
+        </div>
+
+        <div class="col-12" *ngIf="this.mostrarTurnosPorHistoriaClinica">
+          <app-turnos-especialidad [turnos]="this.turnos" [esPaciente]="true" (eventoTurnoModificado)="modificar($event)"></app-turnos-especialidad>
+        </div>
+
+        <!--POR ESPECIALIDAD-->
+        <div class="col-12" *ngIf="this.porEspecialidad">
+          <app-tabla-especialidad [especialidadDeUnPaciente]="true" (eventoEspecialidadSeleccionada)="especialidadSeleccionada($event)"></app-tabla-especialidad>
+          </div>
+        <div class="col-12" *ngIf="this.mostrarTurnosPorEspecialidad && this.especialidad">
+          <app-turnos-especialidad [turnos]="this.turnos" [esPaciente]="true" [especialidad]="this.especialidad" (eventoTurnoModificado)="modificar($event)"></app-turnos-especialidad>
+          </div>
+
+         <!--POR ESPECIALISTA-->
+        <div class="col-12" *ngIf="this.porEspecialista">
+        <app-tabla-especialistas [especialistasDeUnPaciente]="true" (eventoEspecialistaSeleccionado)="especialistaSeleccionado($event)"></app-tabla-especialistas>
+        </div>
+
+        <div class="col-12" *ngIf="this.mostrarTurnosPorEspecialista && this.especialista">
+        <app-turnos-especialista [turnos]="this.turnos" [esPaciente]="true" [especialista]="this.especialista" (eventoTurnoModificado)="modificar($event)"></app-turnos-especialista>
+        </div>
+
+
+
+      </div>
+</div>
+
+
+
+<!--ESPECIALISTA-->
+<div *ngIf="this.auth.usuario.perfil=='especialista' && !this.spinner">
+
+
+    <div class="row  d-flex justify-content-center" style="height:100px;" >
+
+
+        <div class="col-12 justify-content-center d-flex align-items-center bg-success" style="height:100px;">
+          <button class="btn btn-dark " routerLink="../../home">Volver</button>
+        </div>
+    </div>
+
+    <div class="row  d-flex justify-content-center" style="height:100px;">
+      <div class="col-8 bg-dark d-flex justify-content-center align-items-center text-center">
+      <label for="busqueda" class="text-light">Realizar búsqueda por:</label> &nbsp;
+      <select name="busqueda" (change)="buscar($event)" value="Busqueda">
+        <option></option>
+        <option value="especialidad">Especialidad</option>
+        <option value="paciente">Paciente</option>
+        <option value="fecha">Fecha</option>
+        <option value="estado">Estado del turno</option>
+        <option value="historia">Historia clinica</option>
+      </select>
+      </div>
+     </div>
+
+    <div class="row  d-flex justify-content-center" style="height:100px;">
+  <!--ESTADO-->
+  <div class="col-12" *ngIf="this.porEstado">
+    <app-tabla-turnos [porEstado]="true" [especialista]="this.especialista" (eventoEstadoSeleccionado)="estadoSeleccionado($event)"></app-tabla-turnos>
+  </div>
+
+  <div class="col-12" *ngIf="this.mostrarTurnosPorEstado">
+    <app-turnos-especialidad [turnos]="this.turnos"  [esEspecialista]="true" [estado]="this.estado" (eventoTurnoModificado)="modificar($event)"></app-turnos-especialidad>
+  </div>
+
+  <!--FECHAS-->
+    <div class="col-12" *ngIf="this.porFecha">
+      <app-tabla-turnos [porFecha]="true" [especialista]="this.especialista" (eventoFechaSeleccionada)="fechaSeleccionada($event)"></app-tabla-turnos>
+    </div>
+
+    <div class="col-12" *ngIf="this.mostrarTurnosPorFecha">
+      <app-turnos-especialidad [turnos]="this.turnos"  [esEspecialista]="true" [fecha]="this.fecha" (eventoTurnoModificado)="modificar($event)"></app-turnos-especialidad>
+    </div>
+
+     <!--POR HISTORIA CLINICA-->
+
+     <div class="col-12" *ngIf="this.porHistoriaClinica">
+      <app-tabla-turnos [porHistoriaClinica]="true" [especialista]="this.especialista" (eventoHistoriaClinicaSeleccionada)="turnoPorHistoriaClinicaSeleccionada($event)"></app-tabla-turnos>
+    </div>
+
+    <div class="col-12" *ngIf="this.mostrarTurnosPorHistoriaClinica">
+      <app-turnos-especialidad [turnos]="this.turnos" [esEspecialista]="true" (eventoTurnoModificado)="modificar($event)"></app-turnos-especialidad>
+    </div>
+
+
+<!--POR ESPECIALIDAD-->
+          <div class="col-12" *ngIf="this.porEspecialidad">
+          <app-tabla-especialidad [especialidadDeUnEspecialista]="true" (eventoEspecialidadSeleccionada)="especialidadSeleccionada($event)"></app-tabla-especialidad>
+          </div>
+
+          <div class="col-12" *ngIf="this.mostrarTurnosPorEspecialidad && this.especialidad">
+            <app-turnos-especialidad [turnos]="this.turnos" [esEspecialista]="true" [especialidad]="this.especialidad" (eventoTurnoModificado)="modificar($event)"></app-turnos-especialidad>
+          </div>
+<!--POR PACIENTE-->
+          <div class="col-12" *ngIf="this.porPaciente">
+            <app-tabla-pacientes [pacientesDeUnEspecialista]="true"(eventoPacienteSeleccionado)="pacienteSeleccionado($event)" >  </app-tabla-pacientes>
+          </div>
+
+          <div class="col-12" *ngIf="this.mostrarTurnosPorPaciente && this.paciente">
+            <app-turnos-paciente [turnos]="this.turnos" [paciente]="this.paciente" (eventoTurnoModificado)="modificar($event)"></app-turnos-paciente>
+          </div>
+
+
+
+    </div>
+
+</div>
+
+
+<!--ADMINISTRADOR-->
+<div *ngIf="this.auth.usuario.perfil=='administrador' && !this.spinner">
+
+
+      <div class="row  d-flex justify-content-center" style="height:100px;">
+
+
+          <div class="col-12 justify-content-center d-flex align-items-center bg-success" style="height:100px;">
+           <button class="btn btn-dark " routerLink="../../home">Volver</button>
+         </div>
+      </div>
+
+      <div class="row  d-flex justify-content-center" style="height:100px;">
+         <div class="col-6 bg-dark d-flex justify-content-center align-items-center text-center">
+         <button class="btn btn-success" (click)="buscarPorEspecialidad()">Filtrar por especialidad</button>
+          </div>
+          <div class="col-6 bg-dark d-flex justify-content-center align-items-center">
+          <button class="btn btn-info" (click)="buscarPorEspecialista()">Filtrar por especialista</button>
+          </div>
+      </div>
+
+      <div class="row  d-flex justify-content-center" style="height:100px;">
+          <div class="col-12" *ngIf="this.porEspecialidad">
+          <app-tabla-especialidad [especialidadDeUnAdministrador]="true" (eventoEspecialidadSeleccionada)="especialidadSeleccionada($event)"></app-tabla-especialidad>
+          </div>
+          <div class="col-12" *ngIf="this.porEspecialista">
+          <app-tabla-especialistas [especialistasDeUnAdministrador]="true"  (eventoEspecialistaSeleccionado)="especialistaSeleccionado($event)"></app-tabla-especialistas>
+          </div>
+
+
+          <div class="col-12" *ngIf="this.mostrarTurnosPorEspecialista && this.especialista">
+          <app-turnos-especialista [turnos]="this.turnos" [esAdmin]="true" [especialista]="this.especialista" (eventoTurnoModificado)="modificar($event)"></app-turnos-especialista>
+          </div>
+          <div class="col-12" *ngIf="this.mostrarTurnosPorEspecialidad && this.especialidad">
+          <app-turnos-especialidad [turnos]="this.turnos" [esAdmin]="true" [especialidad]="this.especialidad" (eventoTurnoModificado)="modificar($event)"></app-turnos-especialidad>
+          </div>
+      </div>
+  </div>
+
+
+
+<!--
+  <div class="col-4">
+    <div *ngFor="let turno of this.turnos">
+
+        <div class="card-body" style="border-radius: 2px;">
+          <div [ngClass]="{'card text-dark bg-secondary' : turno.estado == 'pendiente','card text-dark bg-warning' : turno.estado == 'cancelado',
+          'card text-dark bg-info' : turno.estado == 'aceptado','card text-dark bg-danger' : turno.estado == 'rechazado',
+          'card text-dark bg-success' : turno.estado == 'Realizado'}">
+              <div class="card-header">
+                <b class="fs-5">turno: {{turno.dia}} {{turno.diaNumero}} de {{turno.mes}}, a las {{turno.hora}}hs</b>
+                </div>
+              <div class="card-body">
+                  <h5 class="card-title">
+                    <b>Estado:</b>
+                  </h5>
+                      {{turno.estado}}
+                 <h5 class="card-title">
+                   <b>Especialista: {{turno.especialista}}</b>
+                     </h5>
+                </div>
+
+            </div>
+            <div class="col-4">
+
+              <button class="btn btn-danger btn-block btn-lg">Cancelar</button>
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+
+             <br>
+           </div>
+         </div>
+
+
+-->
+
+
+
+
+

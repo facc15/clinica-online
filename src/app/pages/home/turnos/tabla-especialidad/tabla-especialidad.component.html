@@ -1,0 +1,49 @@
+
+      <div class="row bg-dark text-center text-white">
+        <strong>Seleccionar especialidad</strong>
+
+      </div>
+
+      <div class="row" style="overflow-y: scroll;" *ngIf="!this.especialidadDeUnPaciente && !this.especialidadDeUnEspecialista && !this.especialidadDeUnAdministrador">
+        <table class="table table-dark table-hover text-center">
+
+          <tbody>
+
+          <tr *ngFor="let especialidad of this.listaEspecialidadesEspecialista" (click)="elegirEspecialidad(especialidad)" style="cursor: pointer;">
+            <td>{{especialidad.especialidad}}</td>
+          </tr>
+          </tbody>
+          </table>
+      </div>
+
+      <div class="row" style="overflow-y: scroll;" *ngIf="this.especialidadDeUnPaciente">
+        <table class="table table-dark table-hover text-center">
+          <tbody>
+          <tr *ngFor="let especialidad of this.listaEspecialidadesEspecialista | filtroEspecialidadesPaciente" (click)="elegirEspecialidad(especialidad)" style="cursor: pointer;">
+            <td>{{especialidad.especialidad}}</td>
+          </tr>
+          </tbody>
+          </table>
+      </div>
+
+      <div class="row" style="overflow-y: scroll;" *ngIf="this.especialidadDeUnEspecialista">
+        <table class="table table-dark table-hover text-center">
+          <tbody>
+
+          <tr *ngFor="let especialidad of this.listaEspecialidadesEspecialista | filtroEspecialidadesEspecialista" (click)="elegirEspecialidad(especialidad)" style="cursor: pointer;">
+            <td>{{especialidad.especialidad}}</td>
+          </tr>
+          </tbody>
+          </table>
+      </div>
+
+      <div class="row" style="overflow-y: scroll;" *ngIf="this.especialidadDeUnAdministrador">
+        <table class="table table-dark table-hover text-center">
+          <tbody>
+
+          <tr *ngFor="let especialidad of this.listaEspecialidadesEspecialista | filtroEspecialidadesAdministrador" (click)="elegirEspecialidad(especialidad)" style="cursor: pointer;">
+            <td>{{especialidad.especialidad}}</td>
+          </tr>
+          </tbody>
+          </table>
+      </div>

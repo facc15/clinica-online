@@ -1,0 +1,106 @@
+<!--PACIENTE-->
+<div *ngIf="this.usuario.perfil=='paciente'">
+  <div *ngIf="this.verHistoria">
+    <app-ver-historia-clinica [paciente]="this.paciente" (eventoVolver)="volver()"> </app-ver-historia-clinica>
+  </div>
+  <div *ngIf="!this.verHistoria">
+  <div class="row d-flex justify-content-center align-items-center">
+
+     <div class="col-5 d-flex justify-content-center align-items-center">
+
+          <div class="card  text-center">
+          <img *ngIf="!this.cambiar" [src]="this.foto" class="card-img-top" height="300">
+          <img *ngIf="this.cambiar" [src]="this.foto2" class="card-img-top" height="300">
+          <button [@animacionPerfil]="this.estadoPerfil" class="btn btn-dark" (click)="cambiarFoto()">Ver otra foto</button>
+          </div>
+      </div>
+  </div>
+
+  <div class="row d-flex">
+    <div class="col-12 d-flex justify-content-center align-items-center text-start">
+
+      <div class="card">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Nombre: <span>{{this.paciente.nombre}}</span> </li>
+          <li class="list-group-item">Apellido:<span>{{this.paciente.apellido}}</span> </li>
+          <li class="list-group-item">Edad: <span>{{this.paciente.edad}}</span></li>
+          <li class="list-group-item">Dni: <span>{{this.paciente.dni}}</span></li>
+          <li class="list-group-item">Correo: <span>{{this.paciente.correo}}</span></li>
+          <li class="list-group-item">Obra social: <span>{{this.paciente.obraSocial}}</span></li>
+          <li class="list-group-item">Perfil: <span>{{this.paciente.perfil}}</span></li>
+          <li class="verHistoria list-group-item text-center bg-success" (click)="verHistoriaClinica()"><span><strong>Ver historia clínica</strong></span></li>
+          <br>
+          <button class="btn btn-danger btn-block" routerLink="../home">Volver</button>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+<!--ESPECIALISTA-->
+<div *ngIf="this.usuario.perfil=='especialista'">
+  <div class="row d-flex justify-content-center align-items-center">
+
+     <div class="col-5 d-flex justify-content-center align-items-center">
+
+          <div class="card  text-center">
+          <img [src]="this.foto" class="card-img-top" height="300">
+          </div>
+      </div>
+  </div>
+
+  <div class="row d-flex">
+    <div class="col-12 d-flex justify-content-center align-items-center text-start">
+
+      <div class="card">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Nombre: <span>{{this.especialista.nombre}}</span> </li>
+          <li class="list-group-item">Apellido:<span>{{this.especialista.apellido}}</span> </li>
+          <li class="list-group-item">Edad: <span>{{this.especialista.edad}}</span></li>
+          <li class="list-group-item">Dni: <span>{{this.especialista.dni}}</span></li>
+          <li class="list-group-item">Correo: <span>{{this.especialista.correo}}</span></li>
+          <li class="list-group-item">Perfil: <span>{{this.especialista.perfil}}</span></li>
+          <li class="list-group-item">Horarios: <span>{{this.especialista.horarios}}</span></li>
+          <li *ngFor="let item of this.especialista.especialidades" class="list-group-item">Especialidad: <span>{{item}}</span></li>
+          <button class="btn btn-danger btn-block" routerLink="../home">Volver</button>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!--ADMINISTRADOR-->
+<div *ngIf="this.usuario.perfil=='administrador'">
+  <div class="row d-flex justify-content-center align-items-center">
+
+     <div class="col-5 d-flex justify-content-center align-items-center">
+
+          <div class="card  text-center">
+          <img [src]="this.foto" class="card-img-top" height="300">
+          </div>
+      </div>
+  </div>
+
+  <div class="row d-flex">
+    <div class="col-12 d-flex justify-content-center align-items-center text-start">
+
+      <div class="card">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Nombre: <span>{{this.administrador.nombre}}</span> </li>
+          <li class="list-group-item">Apellido:<span>{{this.administrador.apellido}}</span> </li>
+          <li class="list-group-item">Edad: <span>{{this.administrador.edad}}</span></li>
+          <li class="list-group-item">Dni: <span>{{this.administrador.dni}}</span></li>
+          <li class="list-group-item">Correo: <span>{{this.administrador.correo}}</span></li>
+          <li class="list-group-item">Perfil: <span>{{this.administrador.perfil}}</span></li>
+          <button class="btn btn-danger btn-block" routerLink="../home">Volver</button>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>

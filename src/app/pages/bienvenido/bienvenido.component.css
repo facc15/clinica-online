@@ -1,0 +1,17 @@
+.container{
+  height: 80vh;
+  background-image: url('../../../assets/clinica3.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.boton{
+  border-radius: 20%;
+}
+
+.titulo
+{
+  font-family: 'Shadows Into Light', cursive;
+  font-weight: 400;
+  border-color: green;
+}

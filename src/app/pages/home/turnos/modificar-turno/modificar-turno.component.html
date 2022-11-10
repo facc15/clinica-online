@@ -1,0 +1,106 @@
+<div *ngIf="this.cancelado">
+
+  <div class="row align-items-center d-flex justify-content-center" >
+      <div class="col-10 text-center">
+
+      <h3>Por qué desea cancelar el turno del {{this.turno.fecha.dia}} {{this.turno.fecha.diaNumero}} de {{this.turno.fecha.mes}}?</h3>
+
+      </div>
+  </div>
+<form [formGroup]="this.form" (ngSubmit)="confirmar()">
+  <div class="row align-items-center d-flex justify-content-center">
+      <div class="col-12 text-center">
+        <textarea name="Text1" cols="40" rows="5" formControlName="resenia"></textarea>
+      </div>
+  </div>
+
+  <div class="row align-items-center d-flex justify-content-center">
+      <div class="col-3 text-center">
+        <button type="submit" class="btn btn-success" [disabled]="this.form.invalid" >
+         Confirmar
+        </button>
+      </div>
+  </div>
+  <br>
+  <div class="row align-items-center d-flex justify-content-center">
+      <div class="col-3 text-center">
+        <button type="submit" class="btn btn-danger"  (click)="volver()">
+         Volver
+        </button>
+      </div>
+  </div>
+
+</form>
+
+</div>
+
+<div *ngIf="this.rechazado">
+
+    <div class="row align-items-center d-flex justify-content-center" >
+        <div class="col-10 text-center">
+
+          <h3>Por qué desea rechazar el turno del {{this.turno.fecha.dia}} {{this.turno.fecha.diaNumero}} de {{this.turno.fecha.mes}}?</h3>
+
+        </div>
+    </div>
+  <form [formGroup]="this.form" (ngSubmit)="confirmar()">
+    <div class="row align-items-center d-flex justify-content-center">
+        <div class="col-12 text-center">
+          <textarea name="Text1" cols="40" rows="5" formControlName="resenia"></textarea>
+        </div>
+    </div>
+
+    <div class="row align-items-center d-flex justify-content-center">
+        <div class="col-3 text-center">
+          <button type="submit" class="btn btn-success" [disabled]="this.form.invalid" >
+           Confirmar
+          </button>
+        </div>
+    </div>
+    <br>
+    <div class="row align-items-center d-flex justify-content-center">
+        <div class="col-3 text-center">
+          <button type="submit" class="btn btn-danger"  (click)="volver()">
+           Volver
+          </button>
+        </div>
+    </div>
+
+  </form>
+
+</div>
+<div *ngIf="this.finalizado">
+
+  <div class="row align-items-center d-flex justify-content-center" >
+      <div class="col-10 text-center">
+
+      <h3>Diagnóstico de atención del paciente {{this.turno.paciente}}:</h3>
+
+      </div>
+  </div>
+<form [formGroup]="this.form" (ngSubmit)="confirmar()">
+  <div class="row align-items-center d-flex justify-content-center">
+      <div class="col-12 text-center">
+        <textarea name="Text1" cols="40" rows="5" formControlName="resenia"></textarea>
+      </div>
+  </div>
+
+  <div class="row align-items-center d-flex justify-content-center">
+      <div class="col-3 text-center">
+        <button type="submit" class="btn btn-success" [disabled]="this.form.invalid" >
+         Confirmar
+        </button>
+      </div>
+  </div>
+  <br>
+  <div class="row align-items-center d-flex justify-content-center">
+      <div class="col-3 text-center">
+        <button type="submit" class="btn btn-danger"  (click)="volver()">
+         Volver
+        </button>
+      </div>
+  </div>
+
+</form>
+
+</div>

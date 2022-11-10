@@ -1,0 +1,123 @@
+<!--POR ESTADO-->
+<div *ngIf="this.paciente">
+  <div *ngIf="this.porEstado">
+      <div class="row bg-dark text-center text-white">
+        <strong>Seleccionar estado</strong>
+      </div>
+
+      <div class="row" style="overflow-y: scroll;">
+        <table class="table table-dark table-hover text-center">
+          <tbody>
+          <tr *ngFor="let turno of this.turnos | turnosPaciente | turnosEstado" style="cursor: pointer;">
+            <td (click)="estadoSeleccionado(turno.estado)">{{turno.estado}}</td>
+          </tr>
+          </tbody>
+          </table>
+      </div>
+  </div>
+
+<!--POR FECHA-->
+    <div *ngIf="this.porFecha">
+        <div class="row bg-dark text-center text-white">
+          <strong>Seleccionar Fecha</strong>
+
+        </div>
+
+        <div class="row" style="overflow-y: scroll;">
+            <table class="table table-dark table-hover text-center">
+              <tbody>
+
+            <tr *ngFor="let turno of this.turnos | turnosPaciente" style="cursor: pointer;">
+             <td (click)="fechaSeleccionada(turno.fecha)">{{turno.fecha.dia}} {{turno.fecha.diaNumero}} de {{turno.fecha.mes}}</td>
+           </tr>
+            </tbody>
+           </table>
+           </div>
+      </div>
+
+<!--POR HISTORIA CLINICA-->
+    <div *ngIf="this.porHistoriaClinica">
+        <div class="row bg-dark text-center text-white">
+        <strong>Seleccionar dato de historia clinica</strong>
+        </div>
+
+      <div class="row" style="overflow-y: scroll;">
+       <table class="table table-dark table-hover text-center">
+
+          <tbody>
+
+       <tr *ngFor="let dato of this.datosDeHistoriaClinica" style="cursor: pointer;">
+        <td (click)="elegirDato(dato)">{{dato}}</td>
+
+        </tr>
+        </tbody>
+       </table>
+     </div>
+    </div>
+
+</div>
+
+<!--POR ESTADO-->
+<div *ngIf="this.especialista">
+
+  <div *ngIf="this.porEstado">
+        <div class="row bg-dark text-center text-white">
+          <strong>Seleccionar estado</strong>
+
+        </div>
+
+        <div class="row" style="overflow-y: scroll;">
+          <table class="table table-dark table-hover text-center">
+
+            <tbody>
+
+            <tr *ngFor="let turno of this.turnos | turnosEspecialista | turnosEstado" style="cursor: pointer;">
+              <td (click)="estadoSeleccionado(turno.estado)">{{turno.estado}}</td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
+  </div>
+
+  <!--POR FECHA-->
+  <div *ngIf="this.porFecha">
+    <div class="row bg-dark text-center text-white">
+      <strong>Seleccionar Fecha</strong>
+
+    </div>
+
+    <div class="row" style="overflow-y: scroll;">
+      <table class="table table-dark table-hover text-center">
+
+        <tbody>
+
+        <tr *ngFor="let turno of this.turnos | turnosEspecialista | turnosFechaRepetida" style="cursor: pointer;">
+          <td (click)="fechaSeleccionada(turno.fecha)">{{turno.fecha.dia}} {{turno.fecha.diaNumero}} de {{turno.fecha.mes}}</td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
+  </div>
+
+  <!--POR HISTORIA CLINICA-->
+  <div *ngIf="this.porHistoriaClinica">
+    <div class="row bg-dark text-center text-white">
+      <strong>Seleccionar dato de historia clinica</strong>
+
+    </div>
+
+    <div class="row" style="overflow-y: scroll;">
+      <table class="table table-dark table-hover text-center">
+
+        <tbody>
+
+        <tr *ngFor="let dato of this.datosDeHistoriaClinica" style="cursor: pointer;">
+          <td (click)="elegirDato(dato)">{{dato}}</td>
+
+        </tr>
+        </tbody>
+        </table>
+    </div>
+  </div>
+
+  </div>

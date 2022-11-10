@@ -1,0 +1,22 @@
+
+      <div class="row bg-dark text-center text-white">
+        <strong>Seleccionar fechas disponibles</strong>
+
+      </div>
+
+      <div class="row" style="overflow-y: scroll;">
+        <table class="table table-dark table-hover text-center">
+          <thead>
+          <tr>
+
+          </tr>
+        </thead>
+          <tbody>
+
+          <tr *ngFor="let fecha of this.fechas" (click)="elegirFecha(fecha)" style="cursor: pointer;">
+            <td>{{fecha.dia}} {{fecha.diaNumero}} de {{fecha.mes}}</td>
+
+          </tr>
+          </tbody>
+          </table>
+      </div>

@@ -1,0 +1,62 @@
+<div class="container">
+
+    <div class="row text-center">
+      <h2 class="titulo">CLINICA EL LOBO</h2>
+
+      </div>
+
+      <div class="row align-items-center justify-content-center bg-dark" style="height:70vh;" *ngIf="this.loguear">
+        <div class="col-6 align-self-center">
+          <app-login [perfil]="this.perfil" (eventoRegistrar)="irARegistrar($event)"></app-login>
+        </div>
+      </div>
+
+       <div class="row align-items-center justify-content-center bg-dark" style="height:70vh;" *ngIf="this.registrar">
+          <app-registro [perfil]="this.perfil" (eventoLogin)="irALoguear($event)"> </app-registro>
+      </div>
+
+
+
+
+    <div class="row align-items-center justify-content-between" style="height:50vh;" *ngIf="!this.loguear && !this.registrar">
+      <button class="col-4 boton btn btn-lg text-light btn-info" style="height:30vh;" (click)="log('paciente')"><img src="../../../assets/paciente.png" alt=""></button>
+
+      <button class="col-4 boton btn btn-lg text-light mr-2" style="background-color:rgb(238, 149, 238); height:30vh;" (click)="log('especialista')"><img src="../../../assets/especialista.png" width="300" height="260" alt=""></button>
+
+    </div>
+
+    <div class="row align-items-center justify-content-center" style="height:30vh;" *ngIf="this.loguear || this.registrar">
+
+      <button class="mt-2 col-4 boton btn btn-lg text-light mr-2 btn-danger" (click)="volver()">Volver</button>
+
+    </div>
+
+
+
+
+    <div class="row row align-items-center d-flex justify-content-center" *ngIf="!this.loguear && !this.registrar">
+
+      <div class="col-12 text-end">
+        <button class="boton btn btn-lg text-light mr-2 text-end bg-info" style="height:5vh;" (click)="accesoRapido('facc.utn@gmail.com','123123')">Paciente 1</button>
+      </div>
+
+      <div class="mt-2 col-12 text-end">
+        <button class="boton btn btn-lg text-light mr-2 text-end bg-info" style="height:5vh;" (click)="accesoRapido('elturu_gonzalez@hotmail.com','123123')">Paciente 2</button>
+      </div>
+
+      <div class="mt-2 col-12 text-end">
+        <button class="boton btn btn-lg text-light mr-2 text-end bg-info" style="height:5vh;" (click)="accesoRapido('facundodrocha@gmail.com','123123')">Paciente 3</button>
+      </div>
+      <div class="mt-2 col-12 text-end">
+        <button class="boton btn btn-lg text-light mr-2 text-end" style="background-color:rgb(238, 149, 238); height:5vh;" (click)="accesoRapido('maxilopezrnr@gmail.com','123123')">Especialista 1</button>
+      </div>
+      <div class="mt-2 col-12 text-end">
+        <button class="boton btn btn-lg text-light mr-2 text-end" style="background-color:rgb(238, 149, 238); height:5vh;" (click)="accesoRapido('sebaselcuervo19@gmail.com','123123')">Especialista 2</button>
+      </div>
+      <div class="mt-2 col-12 text-end">
+        <button class="boton btn btn-lg text-light mr-2 text-end bg-secondary" style="height:5vh;" (click)="accesoRapido('rochadfacundo@gmail.com','123123')">Administrador 1</button>
+      </div>
+    </div>
+
+
+</div>

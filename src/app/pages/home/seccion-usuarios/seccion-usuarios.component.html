@@ -1,0 +1,103 @@
+<div *ngIf="!this.registrarAdmin && !this.registrado">
+
+<div class="row bg-dark text-white text-center">
+  <div class="col">
+    <button class="btn btn-secondary btn-block" (click)="irARegistro()">Crear nuevo administrador</button>
+  </div>
+  <div class="col">
+    <button class="btn btn-success btn-block" (click)="descargarEnExcel()">Descargar usuarios en Excel</button>
+  </div>
+</div>
+
+
+<div *ngIf="this.verHistoriaClinica">
+<app-ver-historia-clinica [paciente]="this.paciente" (eventoVolver)="volver()"> </app-ver-historia-clinica>
+
+</div>
+
+<div class="row" *ngIf="!this.verHistoriaClinica">
+
+<div class="mt-2 bg-dark text-white text-center">
+    <strong> LISTADO DE USUARIOS </strong>
+    <table class="table table-dark text-center overflow-auto" *ngIf="this.listaUsuarios" id="tabla">
+      <thead>
+      <tr>
+
+
+
+        <th><strong>Nombre</strong></th>
+        <th><strong>Apellido</strong></th>
+        <th><strong>Edad</strong></th>
+        <th><strong>Dni</strong></th>
+        <th><strong>Correo</strong></th>
+        <th><strong>Perfil</strong></th>
+        <th><strong>Foto</strong></th>
+
+      </tr>
+    </thead>
+      <tbody>
+
+      <tr *ngFor="let usuario of this.listaUsuarios" [ngClass]="{'text-info':usuario.perfil=='paciente','especialista':usuario.perfil=='especialista'}" style="overflow-y: scroll;">
+        <td>{{usuario.nombre }} <br><img  src="../../../../assets/icos/historiaClinica.png" (click)="irAHistoriaClinica(usuario)" width="60" height="40" style="cursor:pointer;"  *ngIf="usuario.perfil=='paciente'"></td>
+        <td>{{usuario.apellido}}</td>
+        <td>{{usuario.edad}}</td>
+        <td>{{usuario.dni}}</td>
+        <td>{{usuario.correo}}</td>
+        <td>{{usuario.perfil}}</td>
+        <td> <img [src]="usuario.pathPerfil" width="80" height="60"> </td>
+
+      </tr>
+
+
+    </tbody>
+
+
+      </table>
+    </div>
+
+
+
+
+    <div class="bg-dark text-white text-center mt-3">
+      <strong *ngIf="this.listaEspecialistas.length>0">ESPECIALISTAS A HABILITAR</strong>
+      <strong *ngIf="this.listaEspecialistas.length==0">NO HAY ESPECIALISTAS PARA HABILITAR</strong>
+     </div>
+     <table class="table table-dark text-center overflow-auto" *ngIf="this.listaEspecialistas.length>0">
+      <thead>
+      <tr>
+
+        <th><strong>Nombre</strong></th>
+        <th><strong>Apellido</strong></th>
+        <th><strong>Habilitar</strong></th>
+
+
+      </tr>
+    </thead>
+      <tbody>
+
+      <tr *ngFor="let especialista of this.listaEspecialistas" style="cursor: pointer; overflow-y: scroll;">
+        <td>{{especialista.nombre }}</td>
+        <td>{{especialista.apellido}}</td>
+        <td><button class="btn btn-success" (click)="habilitarEspecialista(especialista)">Habilitar</button></td>
+
+      </tr>
+
+
+    </tbody>
+
+
+      </table>
+
+  </div>
+
+
+      </div>
+
+      <div *ngIf="this.registrarAdmin">
+        <app-registro [perfil]="this.perfil" (eventoRegistroAdmin)="adminRegistrado($event)"> </app-registro>
+
+      </div>
+
+
+
+
