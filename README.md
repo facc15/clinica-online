@@ -1,27 +1,40 @@
-# Clinica
+# CLINICA EL LOBO
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.1.
+## Alumno: Facundo Rocha
 
-## Development server
+### Caracteristicas de la clínica
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Cuenta con un ingreso donde puedes seleccionar si ingresas como paciente o como especialista.
+- También cuenta con botones de acceso directo.
+![](https://raw.githubusercontent.com/facc15/clinica-online/main/src/assets/capturas/ingreso.png)
 
-## Code scaffolding
+- Una vez seleccionado el perfil te permite el ingreso de datos.
+- Una vez registrado ya puedes tener el ingreso al sistema de turnos.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+![](https://raw.githubusercontent.com/facc15/clinica-online/main/src/assets/capturas/registro.png)
 
-## Build
+- Dentro del portal ya puedes tener acceso al sistema de turnos, asimismo como el acceso a distintas funcionalidades.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+![](https://raw.githubusercontent.com/facc15/clinica-online/main/src/assets/capturas/home.png)
 
-## Running unit tests
+- Cuando tengas turnos ingresados en el sistema puedes mediante varios filtros facilitar la búsqueda de los mismos
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+![](https://raw.githubusercontent.com/facc15/clinica-online/main/src/assets/capturas/filtros.png)
 
-## Running end-to-end tests
+- Cuando los turnos se encuentren finalizados podrás tener acceso a la historia clinica.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+![](https://raw.githubusercontent.com/facc15/clinica-online/main/src/assets/capturas/historia-clinica.png)
 
-## Further help
+- También tendrás la sección mi perfil que contará con todos tus datos.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+![](https://raw.githubusercontent.com/facc15/clinica-online/main/src/assets/capturas/mi-perfil.png)
+
+- Para los administradores, tendrán una sección especial dónde podrán ver a todos los usuarios registrados en el sistema, pudiendo acceder a la historia clínica de los mismos.
+
+![](https://raw.githubusercontent.com/facc15/clinica-online/main/src/assets/capturas/usuarios.png)
+
+
+
+# Readme.md
+
+###End
