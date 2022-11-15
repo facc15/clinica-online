@@ -47,6 +47,7 @@ export class MiPerfilComponent implements OnInit {
   public especialidades: Especialidades[];
   public especialidadesFiltradas: Especialidades[];
   public turnosFiltrados: Turno[];
+  public turnosFiltradosPorEspecialidad: Turno[];
 
   constructor(private pdfServic: PdfService,private turnoService:TurnoService,public auth: AuthService,private firestore: FirestoreService,private router:Router) {
     this.usuario=new Usuario("","","",0,0,"","","","");
@@ -59,6 +60,7 @@ export class MiPerfilComponent implements OnInit {
     this.especialidades=[];
     this.especialidadesFiltradas=[];
     this.turnosFiltrados=[];
+    this.turnosFiltradosPorEspecialidad=[];
   }
 
   async ngOnInit(): Promise<void> {
@@ -83,7 +85,7 @@ export class MiPerfilComponent implements OnInit {
         {
 
           this.turnoService.obtenerTurnos().subscribe((res)=>{
-            this.turnosFiltrados=res.filter(turno=>turno.uidPaciente==this.usuario.uid);});
+            this.turnosFiltrados=res.filter(turno=>turno.uidPaciente==this.usuario.uid && turno.estado=='finalizado');});
             this.especialidadesFiltradas=[];
 
 
@@ -136,9 +138,18 @@ export class MiPerfilComponent implements OnInit {
 
   seleccionaEspecialidad(especialidad: Especialidades)
   {
-    console.log(especialidad);
+    this.turnosFiltradosPorEspecialidad=this.turnosFiltrados.filter(turno=>turno.especialidad.especialidad==especialidad.especialidad)
+    console.log(this.turnosFiltradosPorEspecialidad);
+    let contenido="";
+    for (const turno of this.turnosFiltradosPorEspecialidad)
+    {
+      contenido+="Especialista: "+turno.especialista+"\n"
+                +"Fecha: "+turno.fecha.dia+" "+turno.fecha.diaNumero+" de "+turno.fecha.mes+"\n"
+                +"Hora: "+turno.fecha.hora+" hs\n"
+                +"Informe: "+ turno.historiaClinica.informe+"\n\n";
+    }
 
-    this.pdfServic.descargarPdf(especialidad);
+    this.pdfServic.descargarPdf(contenido);
   }
 
 

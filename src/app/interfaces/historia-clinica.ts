@@ -7,6 +7,7 @@ export interface HistoriaClinica {
   datoDinamico1: DatoDinamico;
   datoDinamico2: DatoDinamico;
   datoDinamico3: DatoDinamico;
+  informe: string;
 
 }
 

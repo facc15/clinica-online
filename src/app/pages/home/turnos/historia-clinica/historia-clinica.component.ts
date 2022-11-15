@@ -41,7 +41,7 @@ export class HistoriaClinicaComponent implements OnInit {
 
 
 
-    this.historiaClinica= {altura:{},peso:{},temperatura:{},presion:{},datoDinamico1:{},datoDinamico2:{},datoDinamico3:{}} as HistoriaClinica;
+    this.historiaClinica= {altura:{},peso:{},temperatura:{},presion:{},datoDinamico1:{},datoDinamico2:{},datoDinamico3:{},informe:{}} as HistoriaClinica;
 
   }
 
@@ -85,6 +85,7 @@ export class HistoriaClinicaComponent implements OnInit {
     this.historiaClinica.peso=this.form.value.peso;
     this.historiaClinica.presion=this.form.value.presion;
     this.historiaClinica.temperatura=this.form.value.temperatura;
+    this.historiaClinica.informe=this.resenia;
     this.turno.estado='finalizado';
 
     if(!this.mostrarDato1 && !this.mostrarDato2 && !this.mostrarDato3)
