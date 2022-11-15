@@ -243,11 +243,10 @@ export class RegistroComponent implements OnInit {
       this.administrador.apellido=this.formGroup.value.apellido;
       this.administrador.edad=this.formGroup.value.edad;
       this.administrador.dni=this.formGroup.value.dni;
-      this.administrador.pathPerfil=this.especialista.apellido+this.especialista.nombre;
+      this.administrador.pathPerfil=this.administrador.apellido+this.administrador.nombre;
       this.administrador.correo=this.formGroup.value.correo;
       this.administrador.pass=this.formGroup.value.pass;
       this.administrador.perfil=this.perfil;
-
       setTimeout(() => {
         this.registrar(this.administrador);
         this.eventoRegistroAdmin.emit(true);

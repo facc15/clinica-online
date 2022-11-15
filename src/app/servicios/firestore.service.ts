@@ -1,6 +1,6 @@
 import { Usuario, Paciente, Especialista, Administrador } from './../clases/usuario';
 import { Injectable } from '@angular/core';
-import { collection, collectionData, doc, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
+import { collection, collectionData, doc, Firestore, getDocs, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { addDoc } from '@firebase/firestore';
 import { Observable } from 'rxjs';
 import { FirebaseStorage, getDownloadURL, getStorage, listAll, ref, Storage, uploadBytes } from '@angular/fire/storage';
@@ -28,10 +28,16 @@ export class FirestoreService {
 
     this.imagenes=[];
     this.listaUsuarios=[];
-    this.obtenerUsuarios().subscribe(res=>{
-      this.listaUsuarios=res;
-      console.log(res);
-    });
+    try {
+      this.obtenerUsuarios().subscribe(res=>{
+        this.listaUsuarios=res;
+
+      });
+
+    } catch (error) {
+
+    }
+
   }
 
   async agregarColeccionEspecialidad(especialidad: Especialidades)
@@ -102,7 +108,7 @@ export class FirestoreService {
         perfil: this.administrador.perfil
       }).catch(error=>console.log(error));
 
-      this.subirImagen(this.file,this.especialista.pathPerfil);
+      this.subirImagen(this.file,this.administrador.pathPerfil);
     }
 
   }
@@ -117,10 +123,12 @@ export class FirestoreService {
 
 
 
-  obtenerPacientes(): Observable<Paciente[]>
+  async obtenerEspecialistas()
   {
-    const ref= collection(this.firestore,'Pacientes');
-    return collectionData(ref,{idField: 'id'}) as Observable<Paciente[]>;
+    const ref= collection(this.firestore,'Usuarios');
+    const q= query(ref, where("perfil", "==", "especialista"));
+    return await getDocs(q);
+
   }
 
 
@@ -137,6 +145,7 @@ export class FirestoreService {
     return collectionData(ref,{idField: 'id'}) as Observable<Usuario[]>;
   }
 
+
   subirImagen(file: any,path:string)
   {
     const imgRef= ref(this.storage,"Fotos/"+path);
@@ -152,6 +161,14 @@ export class FirestoreService {
    return await listAll(this.refImagen);
 
   }
+
+  async traerFotosEspecialidades()
+  {
+    this.refImagen= ref(this.storage,'Especialidades');
+   return await listAll(this.refImagen);
+
+  }
+
 
 }
 

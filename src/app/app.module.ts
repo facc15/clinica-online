@@ -1,3 +1,4 @@
+
 import { AngularFireModule } from '@angular/fire/compat';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,7 +21,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +34,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
     AngularFireAuthModule,
     ToastrModule.forRoot(),
     ToastNoAnimationModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

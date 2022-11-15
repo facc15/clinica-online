@@ -3,7 +3,7 @@
   <div *ngIf="this.verHistoria">
     <app-ver-historia-clinica [paciente]="this.paciente" (eventoVolver)="volver()"> </app-ver-historia-clinica>
   </div>
-  <div *ngIf="!this.verHistoria">
+  <div *ngIf="!this.verHistoria && !this.descargarHistoria">
   <div class="row d-flex justify-content-center align-items-center">
 
      <div class="col-5 d-flex justify-content-center align-items-center">
@@ -28,14 +28,31 @@
           <li class="list-group-item">Correo: <span>{{this.paciente.correo}}</span></li>
           <li class="list-group-item">Obra social: <span>{{this.paciente.obraSocial}}</span></li>
           <li class="list-group-item">Perfil: <span>{{this.paciente.perfil}}</span></li>
-          <li class="verHistoria list-group-item text-center bg-success" (click)="verHistoriaClinica()"><span><strong>Ver historia clínica</strong></span></li>
-          <br>
-          <button class="btn btn-danger btn-block" routerLink="../home">Volver</button>
+          <li class="verHistoria list-group-item text-center text-light bg-success" (click)="verHistoriaClinica()"><span><strong>Ver historia clínica</strong></span></li>
+          <li class="mt-2 verHistoria list-group-item text-center text-light bg-secondary" (click)="descargarHistoriaClinica()"><span><strong>Descargar historia clínica en PDF</strong></span></li>
+
+          <button class="mt-2 btn btn-danger btn-block" routerLink="../home">Volver</button>
         </ul>
       </div>
     </div>
   </div>
 </div>
+
+<div *ngIf="this.descargarHistoria">
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-12 text-center">
+          <h3>Elija especialidad</h3>
+        </div>
+      </div>
+
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-12 h-25 d-flex justify-content-center" *ngFor="let  especialidad of this.auth.especialidades | filtroEspecialidadesPaciente">
+          <button  class="mt-1 btn btn-info btn-lg text-center" style="border-radius:100%;" (click)="seleccionaEspecialidad(especialidad)">{{especialidad.especialidad}} </button>
+        </div>
+      </div>
+</div>
+
+
 </div>
 
 

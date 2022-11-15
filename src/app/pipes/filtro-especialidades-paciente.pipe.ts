@@ -26,7 +26,8 @@ export class FiltroEspecialidadesPacientePipe implements PipeTransform {
     {
         for(let especialidad of especialidades)
         {
-            if(turnoPaciente.especialidad==especialidad.especialidad)
+
+            if(turnoPaciente.especialidad.especialidad==especialidad.especialidad)
             {
               if(!this.especialidades.includes(especialidad))
               {

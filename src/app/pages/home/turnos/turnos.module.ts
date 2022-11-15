@@ -28,6 +28,7 @@ import { FiltroEspecialistasAdministradorPipe } from 'src/app/pipes/filtro-espec
 import { FiltroPacientesEspecialistaPipe } from 'src/app/pipes/filtro-pacientes-especialista.pipe';
 import { TurnosEstadoPipe } from 'src/app/pipes/turnos-estado.pipe';
 import { TurnosFechaRepetidaPipe } from 'src/app/pipes/turnos-fecha-repetida.pipe';
+import { TurnosEspecialistaPacienteOrdenadoPipe } from 'src/app/pipes/turnos-especialista-paciente-ordenado.pipe';
 
 import { ModificarTurnoComponent } from './modificar-turno/modificar-turno.component';
 import { CompletarEncuestaComponent } from './completar-encuesta/completar-encuesta.component';
@@ -35,6 +36,7 @@ import { CalificarAtencionComponent } from './calificar-atencion/calificar-atenc
 import { HistoriaClinicaComponent } from './historia-clinica/historia-clinica.component';
 import { VerHistoriaClinicaComponent } from './ver-historia-clinica/ver-historia-clinica.component';
 import { TablaTurnosComponent } from './tabla-turnos/tabla-turnos.component';
+import { CardsPacientesComponent } from './cards-pacientes/cards-pacientes.component';
 
 
 @NgModule({
@@ -58,6 +60,7 @@ import { TablaTurnosComponent } from './tabla-turnos/tabla-turnos.component';
     FiltroEspecialidadesAdministradorPipe,
     FiltroEspecialistasAdministradorPipe,
     TurnosEspecialistaPipe,
+    TurnosEspecialistaPacienteOrdenadoPipe,
     ModificarTurnoComponent,
     CompletarEncuestaComponent,
     CalificarAtencionComponent,
@@ -66,15 +69,17 @@ import { TablaTurnosComponent } from './tabla-turnos/tabla-turnos.component';
     FiltroPacientesEspecialistaPipe,
     TurnosFechaRepetidaPipe,
     TurnosEstadoPipe,
-    TablaTurnosComponent
+    TablaTurnosComponent,
+    CardsPacientesComponent
 
   ],
   imports: [
     CommonModule,
     TurnosRoutingModule,
     ReactiveFormsModule,
-    ComponentsModule
+    ComponentsModule,
+    FormsModule
   ],
-  exports:[MisTurnosComponent,SacarTurnoComponent,VerHistoriaClinicaComponent,TablaPacientesComponent]
+  exports:[MisTurnosComponent,SacarTurnoComponent,VerHistoriaClinicaComponent,TablaPacientesComponent,CardsPacientesComponent,FiltroEspecialidadesPacientePipe]
 })
 export class TurnosModule { }

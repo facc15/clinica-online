@@ -1,4 +1,37 @@
-<div class="container">
+
+<!--HACER RESENIA DEL TURNO-->
+<div class="container" *ngIf="this.hacerResenia">
+
+  <div class="row align-items-center d-flex justify-content-center" >
+      <div class="col-12 text-center">
+      <h3>DIAGNÓSTICO</h3>
+      </div>
+  </div>
+  <div class="col-12 text-center">
+    <textarea name="" id="" cols="30" rows="10" [(ngModel)]="this.resenia"></textarea>
+  </div>
+  <br>
+  <div class="row align-items-center d-flex justify-content-center">
+      <div class="col-3 text-center">
+        <button type="button" class="btn btn-success" (click)="irAAgregarDatos()">
+         Ingresar datos de historia clínica
+        </button>
+      </div>
+  </div>
+  <br>
+  <div class="row align-items-center d-flex justify-content-center">
+      <div class="col-3 text-center">
+        <button type="submit" class="btn btn-danger"  (click)="volver()">
+         Volver
+        </button>
+      </div>
+  </div>
+
+
+</div>
+
+<!--DEJAR HISTORIA CLINICA-->
+<div class="container" *ngIf="!this.hacerResenia">
 
   <div class="row align-items-center d-flex justify-content-center" >
       <div class="col-10 text-center">
@@ -80,7 +113,7 @@
   <br>
   <div class="row align-items-center d-flex justify-content-center">
       <div class="col-3 text-center">
-        <button type="submit" class="btn btn-danger"  (click)="volver()">
+        <button type="submit" class="btn btn-danger"  (click)="volverAResenia()">
          Volver
         </button>
       </div>

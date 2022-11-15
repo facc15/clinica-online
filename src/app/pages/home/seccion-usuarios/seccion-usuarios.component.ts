@@ -1,13 +1,13 @@
-import { ExcelService } from './../../../servicios/excel.service';
-import { ToastNoAnimationModule } from 'ngx-toastr';
+import { Turno } from './../../../interfaces/turno';
 import { Router } from '@angular/router';
-import { Especialista, Administrador,Paciente } from 'src/app/clases/usuario';
+import { Especialista, Administrador, Paciente, Usuario } from 'src/app/clases/usuario';
 import { FirestoreService } from 'src/app/servicios/firestore.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { Component, OnInit } from '@angular/core';
-import {Usuario} from '../../../clases/usuario';
 import { getDownloadURL } from '@angular/fire/storage';
 import * as XLSX from 'xlsx';
+import { TurnoService } from 'src/app/servicios/turnos.service';
+import { WorkSheet } from 'xlsx';
 
 @Component({
   selector: 'app-seccion-usuarios',
@@ -24,14 +24,22 @@ export class SeccionUsuariosComponent implements OnInit {
   public tabla: any;
   public administrador!: Administrador;
   public paciente!: Paciente;
+  public turnosFiltrados: Turno[];
+  public data!: any[];
+  public todoData!: any[];
+  public work!: XLSX.WorkSheet;
+
 
   public verHistoriaClinica: boolean=false;
 
-  constructor(private auth: AuthService,private firestore: FirestoreService,private router: Router,private excel: ExcelService)
+  constructor(private turnoService: TurnoService,private auth: AuthService,private firestore: FirestoreService,private router: Router)
   {
     this.listaEspecialistas=[];
     this.registrarAdmin=false;
     this.registrado=false;
+    this.turnosFiltrados=[];
+    this.data=[];
+
   }
 
   ngOnInit() {
@@ -88,6 +96,71 @@ export class SeccionUsuariosComponent implements OnInit {
   volver()
   {
     this.verHistoriaClinica=false;
+  }
+
+  async descargarUsuario(usuario: Usuario)
+  {
+    this.data=[];
+    if(usuario.perfil=='paciente')
+    {
+      this.turnosFiltrados=this.turnoService.turnos.filter(turno=>turno.uidPaciente==usuario.uid && turno.estado=='finalizado');
+
+      let workbook = XLSX.utils.book_new();
+      console.log(this.turnosFiltrados);
+      workbook.Props={Title:this.turnosFiltrados[0].paciente};
+      workbook.SheetNames.push('Hoja paciente 1');
+      var ws = workbook.Sheets["Sheet1"];
+
+
+      this.data.push(["Turno","Especialista"]);
+
+      for (const turno of this.turnosFiltrados)
+      {
+        this.data.push([turno.fecha.diaNumero +"/"+turno.fecha.mesNumero+" a las "+turno.fecha.hora+" hs",
+        turno.especialista]);
+
+      }
+
+      const jsonPacientes = JSON.parse(JSON.stringify(this.data));
+
+      ws=XLSX.utils.json_to_sheet(jsonPacientes);
+      workbook.Sheets["Hoja paciente 1"]=ws;
+
+      XLSX.writeFile(workbook,this.turnosFiltrados[0].paciente+'.xlsx');
+
+
+
+    }else if(usuario.perfil=='especialista')
+    {
+      this.turnosFiltrados=this.turnoService.turnos.filter(turno=>turno.uidEspecialista==usuario.uid && turno.estado=='finalizado');
+
+      let workbook = XLSX.utils.book_new();
+      console.log(this.turnosFiltrados);
+      workbook.Props={Title:this.turnosFiltrados[0].especialista};
+      workbook.SheetNames.push('Hoja especialista 1');
+      var ws = workbook.Sheets["Sheet1"];
+
+
+      this.data.push(["Turno","Paciente"]);
+
+      for (const turno of this.turnosFiltrados)
+      {
+        this.data.push([turno.fecha.diaNumero +"/"+turno.fecha.mesNumero+" a las "+turno.fecha.hora+" hs",
+        turno.paciente]);
+
+      }
+
+      const jsonEspecialistas = JSON.parse(JSON.stringify(this.data));
+
+      ws=XLSX.utils.json_to_sheet(jsonEspecialistas);
+      workbook.Sheets["Hoja especialista 1"]=ws;
+
+
+      XLSX.writeFile(workbook,this.turnosFiltrados[0].especialista+'.xlsx');
+
+    }
+
+
   }
 
   descargarEnExcel()

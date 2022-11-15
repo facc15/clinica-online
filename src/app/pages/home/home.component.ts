@@ -17,16 +17,40 @@ import { getCurrencySymbol } from '@angular/common';
   styleUrls: ['./home.component.css'],
   animations:[
     trigger('animacionSide',[
-      state('inactiva',style({
+      state('void',style({
+        transform: 'translateY(100%)',
+        opacity:0
       })),
-      state('activa',style({
-        backgroundColor: 'blue',
-        color: 'green'
+      transition(':enter',[
+        animate(3000,style({
+          transform:'translateY(0)',
+          opacity:1,
+        }))
+      ]),
+    ]),
+    trigger('animacionBienvenido',[
+      state('void',style({
+        transform: 'translateY(100%)',
+        opacity:0
       })),
-      transition('inactiva <=> activa',
-      animate('0.5s')
-      )
-
+      transition(':enter',[
+        animate(2000,style({
+          transform:'translateY(0)',
+          opacity:1,
+        }))
+      ]),
+    ]),
+    trigger('animacionTitulo',[
+      state('void',style({
+        transform: 'translateY(100%)',
+        opacity:0
+      })),
+      transition(':enter',[
+        animate(1000,style({
+          transform:'translateY(0)',
+          opacity:1,
+        }))
+      ]),
     ])
 
   ]
@@ -153,14 +177,15 @@ export class HomeComponent implements OnInit {
   cerrarSesion()
   {
     this.auth.desloguear().then(()=>{
+      this.toastr.success('Se cerró sesión satisfactoriamente', 'Exito',{
+        timeOut: 1400,
+        progressAnimation: 'increasing',
+        positionClass: 'toast-top-center'
+        });
       setTimeout(() => {
-        this.toastr.success('Se cerró sesión satisfactoriamente', 'Exito',{
-          timeOut: 1000,
-          progressAnimation: 'increasing',
-          positionClass: 'toast-top-center'
-          });
+
         this.router.navigateByUrl('pages/bienvenido');
-      }, 2000);
+      }, 1800);
 
     });
   }

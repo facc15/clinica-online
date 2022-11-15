@@ -11,10 +11,13 @@ import { Turno } from 'src/app/interfaces/turno';
 export class HistoriaClinicaComponent implements OnInit {
 
   @Output() eventoTurnoModificado=new EventEmitter<Turno>();
+  @Output() eventoVolver=new EventEmitter<void>();
   @Input() turno!: Turno;
 
   public historiaClinica: HistoriaClinica;
   public form: FormGroup;
+  public hacerResenia:boolean=true;
+  public resenia: string="";
 
   public mostrarDato1:boolean=false;
   public mostrarDato2:boolean=false;
@@ -46,6 +49,16 @@ export class HistoriaClinicaComponent implements OnInit {
   {
 
   }
+
+  irAAgregarDatos()
+  {
+    this.hacerResenia=false;
+  }
+  volverAResenia()
+  {
+    this.hacerResenia=true;
+  }
+
 
   agregarDato()
   {
@@ -104,7 +117,7 @@ export class HistoriaClinicaComponent implements OnInit {
 
   volver()
   {
-
+    this.eventoVolver.emit();
   }
 
 }

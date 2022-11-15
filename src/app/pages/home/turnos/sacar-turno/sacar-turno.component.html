@@ -4,6 +4,8 @@
         <app-spinner [color]="'verde'"></app-spinner>
  </div>
 </div>
+
+<!--PACIENTE-->
 <div *ngIf="this.miUsuario.perfil=='paciente' && !this.spinner">
   <div class="row  d-flex justify-content-center" style="height:100px;">
 
@@ -20,39 +22,32 @@
   </h2>
 
 </div>
-
-  <div class="row justify-content-center d-flex" *ngIf="!this.porEspecialidad && !this.porEspecialista && !this.elegirDia && !this.elegirHorario">
-
-    <div class="col-5 h-25">
-      <button class="btn btn-info btn-lg" (click)="buscarPorEspecialista()">Buscar por especialista</button>
-    </div>
-
-    <div class="col-5 h-25">
-      <button class="btn btn-dark btn-lg"  (click)="buscarPorEspecialidad()">Buscar por especialidad</button>
+<!--POR ESPECIALIDAD-->
+  <div @animacionBotones class="row justify-content-center d-flex" *ngIf="this.porEspecialidad">
+    <h3 class="text-center">Seleccione especialidad</h3>
+    <div class="col-12 h-25 d-flex justify-content-center" *ngFor="let  especialidad of this.auth.especialidades">
+      <button  class="mt-1 btn btn-info btn-lg text-center" style="border-radius:100%;"><img [src]="especialidad.pathEspecialidad" height="30" width="50" (click)="seleccionaEspecialidad(especialidad)"> </button>
     </div>
   </div>
-
-  <div class="row justify-content-center d-flex" *ngIf="this.porEspecialidad">
-    <div class="col-8">
-    <app-tabla-especialidad (eventoEspecialidadSeleccionada)="seleccionarEspecialista($event)" [especialista]="this.especialistaSeleccionado"></app-tabla-especialidad>
+<!--POR ESPECIALISTA-->
+  <div @animacionBotones class="row justify-content-center d-flex" *ngIf="this.porEspecialista">
+    <h3 class="text-center">Seleccione especialista</h3>
+    <div class="col-12 h-25 d-flex justify-content-center" *ngFor="let  especialista of this.listaEspecialistasFiltrados">
+      <button  class="mt-1 btn btn-info btn-lg text-center" style="width: 150px; height: 130px; border-radius:100%;"  (click)="seleccionarEspecialista(especialista)"><img [src]="especialista.pathPerfil" height="50" width="80" style="border-radius:100%;"><br>{{especialista.nombre}} {{especialista.apellido}}</button>
     </div>
   </div>
-
-  <div class="row justify-content-center d-flex" *ngIf="this.porEspecialista">
-    <div class="col-8">
-    <app-tabla-especialistas (eventoEspecialistaSeleccionado)="seleccionarEspecialidad($event)" [especialidad]="this.especialidadSeleccionada"></app-tabla-especialistas>
+<!--POR DIA-->
+  <div @animacionOpacityBotones class="row justify-content-center d-flex" *ngIf="this.elegirDia">
+    <h3 class="text-center">Seleccione dia</h3>
+    <div class="col-12 h-25 d-flex justify-content-center" *ngFor="let  fecha of this.fechasEspecialista">
+      <button  class="mt-1 btn btn-dark btn-lg text-center text-light" style="width:200px; height: 50px;"  (click)="seleccionarFecha(fecha)">{{fecha.diaNumero}}/{{fecha.mesNumero}}</button>
     </div>
   </div>
-
-  <div class="row justify-content-center d-flex" *ngIf="this.elegirDia">
-    <div class="col-8">
-    <app-tabla-fechas (eventoFechaSeleccionada)="seleccionarHorario($event)"></app-tabla-fechas>
-    </div>
-  </div>
-
-  <div class="row justify-content-center d-flex" *ngIf="this.elegirHorario">
-    <div class="col-8">
-    <app-tabla-horarios [especialistaSeleccionado]="this.especialistaSeleccionado" (eventoHorarioSeleccionado)="solicitarTurno($event)" [fechaSeleccionada]="this.fechaSeleccionada"></app-tabla-horarios>
+<!--POR HORA-->
+  <div @animacionOpacityBotones class="row justify-content-center d-flex" *ngIf="this.elegirHorario">
+    <h3 class="text-center">Seleccione horario</h3>
+    <div class="col-12 h-25 d-flex justify-content-center" *ngFor="let  horas of this.horasDisponibles">
+      <button  class="mt-1 btn btn-dark btn-lg text-center text-light" style="width:200px; height: 50px;"  (click)="seleccionarHorario(horas)">{{horas}} PM</button>
     </div>
   </div>
 
@@ -64,7 +59,6 @@
 
 <div *ngIf="this.miUsuario.perfil=='administrador'  && !this.spinner">
   <div class="row  d-flex justify-content-center" style="height:100px;">
-
     <div class="col-12 justify-content-center d-flex align-items-center bg-success" style="height:100px;">
         <button class="btn btn-dark " routerLink="../../">Volver</button>
      </div>
@@ -72,56 +66,47 @@
 
 
   <div class="row bg-success text-white text-center d-flex justify-content-center align-items-center h-25">
-
     <h2 class="" style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
       Solicitar turno
     </h2>
-
   </div>
 
-    <div class="row justify-content-center d-flex" *ngIf="!this.porEspecialidad && !this.porEspecialista && !this.porPaciente && !this.elegirDia && !this.elegirHorario">
 
-      <div class="col-5 h-25">
-        <button class="btn btn-info btn-lg" (click)="buscarPorEspecialista()">Buscar por especialista</button>
-      </div>
-
-      <div class="col-5 h-25">
-        <button class="btn btn-dark btn-lg"  (click)="buscarPorEspecialidad()">Buscar por especialidad</button>
-      </div>
+    <!--POR ESPECIALIDAD-->
+  <div @animacionBotones class="row justify-content-center d-flex" *ngIf="this.porEspecialidad">
+    <h3 class="text-center">Seleccione especialidad</h3>
+    <div class="col-12 h-25 d-flex justify-content-center" *ngFor="let  especialidad of this.auth.especialidades">
+      <button  class="mt-1 btn btn-info btn-lg text-center" style="border-radius:100%;"><img [src]="especialidad.pathEspecialidad" height="30" width="50" (click)="seleccionaEspecialidad(especialidad)"> </button>
     </div>
-
-    <div class="row justify-content-center d-flex" *ngIf="this.porEspecialidad">
-      <div class="col-8">
-      <app-tabla-especialidad (eventoEspecialidadSeleccionada)="seleccionarEspecialista($event)" [especialista]="this.especialistaSeleccionado"></app-tabla-especialidad>
-      </div>
+  </div>
+<!--POR ESPECIALISTA-->
+  <div @animacionBotones class="row justify-content-center d-flex" *ngIf="this.porEspecialista">
+    <h3 class="text-center">Seleccione especialista</h3>
+    <div class="col-12 h-25 d-flex justify-content-center" *ngFor="let  especialista of this.listaEspecialistas">
+      <button  class="mt-1 btn btn-info btn-lg text-center" style="width: 150px; height: 130px; border-radius:100%;"  (click)="seleccionarEspecialista(especialista)"><img [src]="especialista.pathPerfil" height="50" width="80" style="border-radius:100%;"><br>{{especialista.nombre}} {{especialista.apellido}}</button>
     </div>
+  </div>
 
-    <div class="row justify-content-center d-flex" *ngIf="this.porPaciente">
+    <div @animacionOpacityBotones class="row justify-content-center d-flex" *ngIf="this.porPaciente">
       <div class="col-8">
       <app-tabla-pacientes [pacientesDeUnAdministrador]="true" (eventoPacienteSeleccionado)="seleccionarPaciente($event)"></app-tabla-pacientes>
       </div>
     </div>
 
-    <div class="row justify-content-center d-flex" *ngIf="this.porEspecialista">
-      <div class="col-8">
-      <app-tabla-especialistas (eventoEspecialistaSeleccionado)="seleccionarEspecialidad($event)" [especialidad]="this.especialidadSeleccionada"></app-tabla-especialistas>
-      </div>
-    </div>
-
-
-
-    <div class="row justify-content-center d-flex" *ngIf="this.elegirDia">
-      <div class="col-8">
-      <app-tabla-fechas (eventoFechaSeleccionada)="seleccionarHorario($event)"></app-tabla-fechas>
-      </div>
-    </div>
-
-    <div class="row justify-content-center d-flex" *ngIf="this.elegirHorario">
-      <div class="col-8">
-      <app-tabla-horarios (eventoHorarioSeleccionado)="solicitarTurno($event)" [fechaSeleccionada]="this.fechaSeleccionada"></app-tabla-horarios>
-      </div>
-    </div>
-
+<!--POR DIA-->
+<div @animacionOpacityBotones class="row justify-content-center d-flex" *ngIf="this.elegirDia">
+  <h3 class="text-center">Seleccione dia</h3>
+  <div class="col-12 h-25 d-flex justify-content-center" *ngFor="let  fecha of this.fechasEspecialista">
+    <button  class="mt-1 btn btn-dark btn-lg text-center text-light" style="width:200px; height: 50px;"  (click)="seleccionarFecha(fecha)">{{fecha.diaNumero}}/{{fecha.mesNumero}}</button>
+  </div>
+</div>
+<!--POR HORA-->
+<div @animacionOpacityBotones class="row justify-content-center d-flex" *ngIf="this.elegirHorario">
+  <h3 class="text-center">Seleccione horario</h3>
+  <div class="col-12 h-25 d-flex justify-content-center" *ngFor="let  horas of this.horasDisponibles">
+    <button  class="mt-1 btn btn-dark btn-lg text-center text-light" style="width:200px; height: 50px;"  (click)="seleccionarHorario(horas)">{{horas}} PM</button>
+  </div>
+</div>
 
 
   </div>

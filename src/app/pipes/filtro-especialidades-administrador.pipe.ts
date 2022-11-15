@@ -19,7 +19,7 @@ export class FiltroEspecialidadesAdministradorPipe implements PipeTransform {
    this.turnoService.turnos.filter((turno)=>{
           for (let especialidad of especialidades)
           {
-              if(especialidad.especialidad==turno.especialidad)
+              if(especialidad.especialidad==turno.especialidad.especialidad)
               {
                 if(!this.turnosFiltrados.includes(especialidad))
                 this.turnosFiltrados.push(especialidad);

@@ -1,24 +1,52 @@
+import { Especialidades } from 'src/app/interfaces/especialidades';
+import { FirestoreService } from 'src/app/servicios/firestore.service';
 import { AuthService } from './../../../../servicios/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { TurnoService } from 'src/app/servicios/turnos.service';
 import { Turno } from 'src/app/interfaces/turno';
-import { Usuario } from 'src/app/clases/usuario';
+import { Usuario, Especialista, Paciente } from 'src/app/clases/usuario';
 import { Component, Input, OnInit } from '@angular/core';
 import { Fecha } from 'src/app/clases/fecha';
-import { Especialista, Paciente } from 'src/app/clases/usuario';
+import { getDownloadURL } from '@angular/fire/storage';
+import { arrayRemove } from '@firebase/firestore';
+import { style,state, transition, trigger, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-sacar-turno',
   templateUrl: './sacar-turno.component.html',
-  styleUrls: ['./sacar-turno.component.css']
+  styleUrls: ['./sacar-turno.component.css'],
+  animations:[
+    trigger('animacionBotones',[
+      state('void',style({
+        transform: 'translateY(100%)',
+        opacity:0
+      })),
+      transition(':enter',[
+        animate(2000,style({
+          transform:'translateY(0)',
+          opacity:1,
+        }))
+      ]),
+    ]),
+    trigger('animacionOpacityBotones',[
+      state('void',style({
+        opacity:0
+      })),
+      transition(':enter',[
+        animate(2000,style({
+          opacity:1,
+        }))
+      ]),
+    ]),
+  ]
 })
 export class SacarTurnoComponent implements OnInit {
 
 
   public miUsuario: Usuario;
   public spinner:boolean=false;
-  public porEspecialidad: boolean=false;
+  public porEspecialidad: boolean=true;
   public porEspecialista: boolean=false;
   public porPaciente: boolean=false;
   public elegirDia: boolean=false;
@@ -26,55 +54,150 @@ export class SacarTurnoComponent implements OnInit {
 
   public especialidadSeleccionada: any;
   public especialistaSeleccionado!: Especialista;
+
+  public listaEspecialistas: Especialista[];
+  public listaEspecialistasFiltrados: Especialista[];
+
+  public fechas!: Fecha[];
+  public fechasEspecialista!: Fecha[];
+  public horasDisponibles: string[];
+
   public pacienteSeleccionado!: Paciente;
   public fechaSeleccionada!: Fecha;
   public horarioSeleccionado!: string;
+  public especialidades!: Especialidades[];
+  public especialidad!: Especialidades;
+  public pathEspecialidades: string[];
+
 
 
 
   public turno ={paciente:{},especialista:{},fecha:{},estado:{},uidEspecialista:{},uidPaciente:{},especialidad:{}} as Turno;
 
-  constructor(private auth:AuthService, private turnoService: TurnoService,private router: Router,private toastr: ToastrService) {
+  constructor(public auth:AuthService, private turnoService: TurnoService,private router: Router,private toastr: ToastrService,private firestore: FirestoreService) {
    this.miUsuario=new Usuario("","","",0,0,"","","","");
+   this.pathEspecialidades=[];
+   this.especialidades=new Array();
+   this.especialidad= {uid:{},especialidad:{},pathEspecialidad:{}} as Especialidades;
+   this.listaEspecialistas=[];
+   this.listaEspecialistasFiltrados=[];
+   this.fechasEspecialista=[];
+   this.horasDisponibles=[];
+
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void
+  {
       this.auth.getState().subscribe((res)=>{
         this.miUsuario=this.auth.usuario;
-      })
-  }
+  });
 
-  buscarPorEspecialista()
+
+  for (let index = 0; index < this.auth.especialidades.length; index++)
   {
-    this.porEspecialista=true;
-  }
 
-  buscarPorEspecialidad()
-  {
-    this.porEspecialidad=true;
-  }
-
-  seleccionarEspecialista(event: any)
-  {
-    this.porEspecialidad=false;
-    this.porEspecialista=true;
-    this.especialidadSeleccionada=event;
-
-      if(this.especialistaSeleccionado && this.especialidadSeleccionada)
+    this.firestore.traerFotosEspecialidades().then( async response=>{
+      for(let item of response.items)
       {
-        if(this.miUsuario.perfil=='administrador')
-        {
-          this.porPaciente=true;
-          this.porEspecialista=false;
-        }else
-        {
-          this.porEspecialista=false;
-          this.elegirDia=true;
-        }
+        const url=await getDownloadURL(item);
+        const especialidad=item.name.split('.');
+
+          if(this.auth.especialidades[index].especialidad==especialidad[0])
+          this.auth.especialidades[index].pathEspecialidad=url;
 
       }
 
+      }).catch(error=>{console.log(error);});
   }
+  const lista=Array();
+  this.firestore.obtenerEspecialistas().then((res)=>{
+    res.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      //console.log(doc.id, " => ", doc.data());
+
+      lista.push(doc.data());
+      this.listaEspecialistas=<Especialista[]>lista;
+    });
+
+    for (let index = 0; index < this.listaEspecialistas.length; index++)
+      {
+
+        this.firestore.traerFotos().then( async response=>{
+          for(let item2 of response.items)
+          {
+            const url=await getDownloadURL(item2);
+
+
+              if(this.listaEspecialistas[index].pathPerfil==item2.name)
+              {
+                this.listaEspecialistas[index].pathPerfil=url;
+              }
+
+
+          }});
+        }
+
+  });
+
+  this.fechas= this.turnoService.traerFechas();
+  }
+
+
+  seleccionaEspecialidad(especialidad: Especialidades)
+  {
+    console.log('se eligio a '+especialidad.especialidad);
+    this.especialidadSeleccionada=especialidad;
+    this.porEspecialidad=false;
+    this.porEspecialista=true;
+
+    this.listaEspecialistas.filter((especialista:any)=>{
+      for(let esp of especialista.especialidades)
+      {
+        if(esp==especialidad.especialidad)
+        {
+          this.listaEspecialistasFiltrados.push(especialista);
+          break;
+        }
+      }
+    });
+
+  }
+
+  seleccionarEspecialista(especialista: Especialista)
+  {
+    this.especialistaSeleccionado=especialista;
+    this.porEspecialista=false;
+
+
+    this.fechasEspecialista=this.turnoService.fechasDisponibles(especialista);
+
+    if(this.miUsuario.perfil=='administrador')
+    {
+      this.porPaciente=true;
+      this.porEspecialidad=false;
+    }else
+    {
+      this.porEspecialidad=false;
+      this.elegirDia=true;
+    }
+
+  }
+
+  seleccionarFecha(fecha: Fecha)
+  {
+    this.fechaSeleccionada=fecha;
+    this.horasDisponibles=fecha.horas;
+    this.elegirDia=false;
+    this.elegirHorario=true;
+  }
+
+  seleccionarHorario(hora: string)
+  {
+    this.elegirHorario=false;
+    this.horarioSeleccionado=hora;
+    this.solicitarTurno();
+  }
+
 
   seleccionarPaciente(paciente: Paciente)
   {
@@ -84,40 +207,14 @@ export class SacarTurnoComponent implements OnInit {
     this.elegirDia=true;
   }
 
-  seleccionarEspecialidad(event: Especialista)
-  {
-    this.especialistaSeleccionado=event;
-    this.porEspecialidad=true;
-    this.porEspecialista=false;
 
-    if(this.especialistaSeleccionado && this.especialidadSeleccionada)
-    {
-      if(this.miUsuario.perfil=='administrador')
-      {
-        this.porPaciente=true;
-        this.porEspecialidad=false;
-      }else
-      {
-        this.porEspecialidad=false;
-        this.elegirDia=true;
-      }
 
-    }
-  }
 
-  seleccionarHorario(event: Fecha)
-  {
-    this.elegirDia=false;
-    this.elegirHorario=true;
-    this.fechaSeleccionada=event;
-  }
 
-  solicitarTurno(event : string)
+  solicitarTurno()
   {
     this.spinner=true;
     this.elegirHorario=false;
-
-    this.horarioSeleccionado=event;
 
     this.turno.estado="pendiente";
     this.turno.especialidad=this.especialidadSeleccionada;
@@ -138,6 +235,7 @@ export class SacarTurnoComponent implements OnInit {
     this.turno.fecha.dia=this.fechaSeleccionada.dia;
     this.turno.fecha.diaNumero=this.fechaSeleccionada.diaNumero;
     this.turno.fecha.mes=this.fechaSeleccionada.mes;
+    this.turno.fecha.mesNumero=this.fechaSeleccionada.mesNumero;
 
 
 

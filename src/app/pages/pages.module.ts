@@ -9,6 +9,8 @@ import { BienvenidoComponent } from './bienvenido/bienvenido.component';
 import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 
 
+
+
 @NgModule({
   declarations: [
     BienvenidoComponent,

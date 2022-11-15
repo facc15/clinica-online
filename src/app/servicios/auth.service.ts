@@ -28,18 +28,25 @@ export class AuthService {
     this.usuarioLog=res;
    });
 
-   this.firestore.obtenerUsuarios().subscribe((res)=>{
-    this.usuarios=res;
-    if(this.usuarioLog)
-    {
-      res.filter((usuario)=>{
-        if(usuario.uid== this.usuarioLog.uid)
-        this.usuario=usuario;
-    });
+   try {
+    this.firestore.obtenerUsuarios().subscribe((res)=>{
+      this.usuarios=res;
+      if(this.usuarioLog)
+      {
+        res.filter((usuario)=>{
+          if(usuario.uid== this.usuarioLog.uid)
+          this.usuario=usuario;
+      });
 
-    }
+      }
 
-   });
+     });
+
+   } catch (error)
+   {
+
+   }
+
    this.firestore.obtenerEspecialidades().subscribe((res:any[])=>{
 
     this.especialidades=res;

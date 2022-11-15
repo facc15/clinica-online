@@ -3,16 +3,16 @@
   <div class="col-3 d-flex text-end flex-column flex-shrink-0 p-3 text-white bg-dark" style="height: 95vh;">
 
     <div class="dropdown d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-      <a  *ngIf="this.nombre" class="d-flex justify-content-center align-items-center text-white text-decoration-none">
+      <a  class="d-flex justify-content-center align-items-center text-white text-decoration-none">
         <img src="{{this.foto}}" alt="" width="58" height="58" class="rounded-circle me-2">
-      <strong>Bienvenido, {{this.nombre}}!</strong>
+      <strong *ngIf="this.nombre">Bienvenido, {{this.nombre}}!</strong>
       </a>
     </div>
     <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
+    <ul class="nav nav-pills flex-column mb-auto" @animacionSide>
 
       <li class="mt-4 text-center">
-        <a  [@animacionSide]="this.animacion" class="nav-link text-white" style="cursor:pointer;" (click)="irAMiPerfil()">
+        <a  class="nav-link text-white" style="cursor:pointer;" (click)="irAMiPerfil()">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
           <img src="../../../assets/icos/perfil.png"  width="50" height="50"> Mi perfil
         </a>
@@ -62,17 +62,22 @@
   </div>
 
   <div class="col-9" *ngIf="this.elegirPaciente">
-    <app-tabla-pacientes (eventoPacienteSeleccionado)="verHistoriaClinica($event)"></app-tabla-pacientes>
+    <app-cards-pacientes (eventoPacienteSeleccionado)="verHistoriaClinica($event)"></app-cards-pacientes>
   </div>
 
   <div class="col-9" *ngIf="this.verHistoria">
     <app-ver-historia-clinica [paciente]="this.paciente" (eventoVolver)="volver()"></app-ver-historia-clinica>
   </div>
 
-  <div class="col-9 justify-content-center d-flex">
+  <div class="col-9 justify-content-center d-flex" *ngIf="!this.seccionUsuarios && !this.elegirPaciente && !this.verHistoria">
     <div class="align-items-center justify-content-center">
-      <h3 class="titulo mt-2 text-center">Clínica El Lobo</h3>
-
+      <h3 @animacionTitulo class="titulo mt-2 text-center">Clínica El Lobo</h3>
+      <br>
+         <div class="align-items-center justify-content-center d-flex">
+      <img @animacionBienvenido class="text-center" src="../../../assets/logo.jpg" style="border-radius:100%" width="90" height="80">
+        </div>
+      <div @animacionBienvenido>
+      <br><br>
       <h4> Calidad y servicio al cuidado de la salud.</h4>
       <p class="parrafo"> La clínica El Lobo se constituyó como una clínica abierta, de excelente nivel tecnológico y humano, que se destaca por contar en su staff con profesionales de reconocida trayectoria.
 
@@ -81,7 +86,7 @@
       </p>
      <app-carousel></app-carousel>
     </div>
-
+  </div>
   </div>
 
 

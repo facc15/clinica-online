@@ -1,0 +1,23 @@
+<div class="container">
+
+  <div class="row  justify-content-center d-flex align-items-center">
+
+    <div class="col-6">
+      <div class="miCard card mt-2 justify-content-center d-flex align-items-center" style="width: 18rem;" *ngFor="let paciente of this.listaPacientes | filtroPacientesEspecialista" (click)="pacienteSeleccionado(paciente)">
+        <img [src]="paciente.pathPerfil" class="card-img-top" width="70px" height="120px">
+        <div class="card-body text-center">
+        <h4 class="card-title" >Paciente: {{paciente.nombre}} {{paciente.apellido}}</h4>
+
+          <br>
+          <h6 class="card-subtitle mb-2" style="font-weight: bold;">últimos turnos:</h6>
+          <p class="card-text" *ngFor="let turno of this.turnos | turnosEspecialista | turnosEspecialistaPacienteOrdenado:paciente.uid">
+          <a>{{turno.fecha.dia}} {{turno.fecha.diaNumero}} de {{turno.fecha.mes}} a las {{turno.fecha.hora}} hs</a>
+        </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+

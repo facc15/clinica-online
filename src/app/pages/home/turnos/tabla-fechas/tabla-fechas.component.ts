@@ -16,6 +16,8 @@ export class TablaFechasComponent implements OnInit {
   public turnosDeEspecialista: Turno[];
   public fechasFiltradas!: Fecha[];
 
+  @Input() especialista!: Especialista;
+
   @Output() eventoFechaSeleccionada= new EventEmitter<Fecha>();
 
   constructor(private turnoService: TurnoService,private auth: AuthService) {
@@ -27,6 +29,7 @@ export class TablaFechasComponent implements OnInit {
   ngOnInit(): void {
 
     this.fechas=this.turnoService.traerFechas();
+    console.log("traje a "+this.especialista.nombre);
 
   }
 

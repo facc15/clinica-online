@@ -13,7 +13,14 @@ export class TurnosEspecialistaPipe implements PipeTransform {
 
   transform(turnos:any[], ...args: unknown[]): any
   {
-    this.turnosFiltrados=turnos.filter(turno=>turno.uidEspecialista==this.auth.usuarioLog.uid);
+    try
+    {
+      this.turnosFiltrados=turnos.filter(turno=>turno.uidEspecialista==this.auth.usuarioLog.uid);
+
+    }catch{
+
+    }
+
 
     return this.turnosFiltrados;
   }
