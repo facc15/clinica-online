@@ -1,3 +1,4 @@
+import { InformesComponent } from './informes/informes.component';
 import { AdminGuard } from './../../guards/admin.guard';
 import { SeccionUsuariosComponent } from './seccion-usuarios/seccion-usuarios.component';
 import { LogGuard } from './../../guards/log.guard';
@@ -8,7 +9,8 @@ import { HomeComponent } from './home.component';
 
 const routes: Routes = [
   {path:'', children:[{path:'', component: HomeComponent, canActivate:[LogGuard]}]},
-  {path:'', children:[{path:'seccion-usuarios', component: SeccionUsuariosComponent, canActivate:[LogGuard]}]},
+  {path:'', children:[{path:'informes', component: InformesComponent, canActivate:[LogGuard,AdminGuard]}]},
+  {path:'', children:[{path:'seccion-usuarios', component: SeccionUsuariosComponent, canActivate:[LogGuard,AdminGuard]}]},
   {path: 'turnos', loadChildren: ()=> import('./turnos/turnos.module').then(m=>m.TurnosModule)},
 ];
 

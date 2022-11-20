@@ -1,3 +1,5 @@
+import { Log } from './../interfaces/log';
+import { FechaService } from './fecha.service';
 import { Usuario, Paciente, Especialista, Administrador } from './../clases/usuario';
 import { Injectable } from '@angular/core';
 import { collection, collectionData, doc, Firestore, getDocs, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
@@ -21,7 +23,7 @@ export class FirestoreService {
   public refImagen: any;
   public imagenes: string[];
 
-  constructor(private firestore: Firestore,private storage: Storage)
+  constructor(private firestore: Firestore,private storage: Storage,private fechaService: FechaService)
   {
     this.paciente=new Paciente('','','',0,0,'','','','','','');
     this.especialista=new Especialista('','','',0,0,'','','','');
@@ -112,6 +114,29 @@ export class FirestoreService {
     }
 
   }
+
+  ingresarLog(usuario: Usuario)
+  {
+    const place= collection(this.firestore,'Logs');
+
+    const fecha = this.fechaService.obtenerFechaLog();
+
+      addDoc(place,{
+        usuario: usuario,
+        dia:  fecha.dia,
+        hora: fecha.hora,
+        mes: fecha.mes,
+        minuto: fecha.minuto
+      });
+
+  }
+
+  obtenerLogs() : Observable<Log[]>
+  {
+    const ref= collection(this.firestore,'Logs');
+    return collectionData(ref,{idField: 'id'}) as Observable<Log[]>;
+  }
+
 
 
     async actualizarEspecialista(especialista:Especialista) {

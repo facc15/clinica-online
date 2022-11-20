@@ -36,7 +36,7 @@
       <li class="mt-4 nav-item text-center" *ngIf="this.perfil=='especialista'" (click)="irAElegirPaciente()">
         <a class="nav-link text-white" aria-current="page" style="cursor:pointer;">
           <svg class="bi me-2" width="16" height="16" ></svg>
-          <span >Pacientes</span>
+          <img src="../../../assets/icos/pacientes.png"  width="50" height="50">   <span >Pacientes</span>
         </a>
       </li>
 
@@ -44,6 +44,13 @@
         <a  class="nav-link text-white" *ngIf="this.perfil=='administrador'" style="cursor:pointer;" (click)="irAUsuarios()">
           <svg class="bi me-2" width="16" height="16"></svg>
           <img src="../../../assets/icos/usuarios.png"  width="50" height="50">  Usuarios
+        </a>
+      </li>
+
+      <li class="mt-4 text-center">
+        <a  class="nav-link text-white" *ngIf="this.perfil=='administrador'" style="cursor:pointer;" (click)="irAInformes()">
+          <svg class="bi me-2" width="16" height="16"></svg>
+          <img src="../../../assets/icos/informe.png"  width="50" height="50">  Informes
         </a>
       </li>
 

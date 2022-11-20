@@ -1,3 +1,4 @@
+import { FechaService } from './fecha.service';
 import { Especialidades } from './../interfaces/especialidades';
 import { FirestoreService } from './firestore.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -19,7 +20,7 @@ export class AuthService {
   public usuario: Usuario;
   public usuarios!: Usuario[];
 
-  constructor(public auth:Auth,private router:Router, private toastr: ToastrService,private authF: AngularFireAuth,private firestore: FirestoreService) {
+  constructor(private fechaService: FechaService,public auth:Auth,private router:Router, private toastr: ToastrService,private authF: AngularFireAuth,private firestore: FirestoreService) {
    this.esta=false;
    this.especialidades=[];
    this.usuario=new Usuario("","","",0,0,"","","","");
@@ -153,6 +154,8 @@ export class AuthService {
         this.router.navigateByUrl('pages/login/verificar-correo');
       }else
       {
+        this.firestore.ingresarLog(this.usuario);
+
         this.toastr.success("El usuario se logueó satisfactoriamente!!!","Éxito",{
           timeOut: 1000,
           progressAnimation: 'increasing',
@@ -171,7 +174,6 @@ export class AuthService {
 
 
   }
-
 
 
   getState()

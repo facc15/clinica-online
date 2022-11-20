@@ -29,6 +29,7 @@ import { FiltroPacientesEspecialistaPipe } from 'src/app/pipes/filtro-pacientes-
 import { TurnosEstadoPipe } from 'src/app/pipes/turnos-estado.pipe';
 import { TurnosFechaRepetidaPipe } from 'src/app/pipes/turnos-fecha-repetida.pipe';
 import { TurnosEspecialistaPacienteOrdenadoPipe } from 'src/app/pipes/turnos-especialista-paciente-ordenado.pipe';
+import { TurnosPacienteRepetidoPipe } from 'src/app/pipes/turnos-paciente-repetido.pipe';
 
 import { ModificarTurnoComponent } from './modificar-turno/modificar-turno.component';
 import { CompletarEncuestaComponent } from './completar-encuesta/completar-encuesta.component';
@@ -61,6 +62,7 @@ import { CardsPacientesComponent } from './cards-pacientes/cards-pacientes.compo
     FiltroEspecialistasAdministradorPipe,
     TurnosEspecialistaPipe,
     TurnosEspecialistaPacienteOrdenadoPipe,
+    TurnosPacienteRepetidoPipe,
     ModificarTurnoComponent,
     CompletarEncuestaComponent,
     CalificarAtencionComponent,

@@ -29,6 +29,16 @@ export class TablaFechasComponent implements OnInit {
   ngOnInit(): void {
 
     this.fechas=this.turnoService.traerFechas();
+
+
+    for(let fecha of this.fechas)
+    {
+      if(!this.fechasFiltradas.includes(fecha))
+      {
+        this.fechasFiltradas.push(fecha);
+      }
+    }
+
     console.log("traje a "+this.especialista.nombre);
 
   }

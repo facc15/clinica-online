@@ -6,15 +6,18 @@ import { LoginModule } from './../login/login.module';
 import { HomeComponent } from './home.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { SeccionUsuariosComponent } from './seccion-usuarios/seccion-usuarios.component';
+import { InformesComponent } from './informes/informes.component';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
-    SeccionUsuariosComponent
+    SeccionUsuariosComponent,
+    InformesComponent
   ],
   imports: [
     CommonModule,
@@ -23,6 +26,7 @@ import { SeccionUsuariosComponent } from './seccion-usuarios/seccion-usuarios.co
     TurnosModule,
     FormsModule,
     ComponentsModule,
+    HighchartsChartModule,
   ],
   exports:[SeccionUsuariosComponent]
 })

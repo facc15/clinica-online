@@ -1,0 +1,100 @@
+
+
+<div>
+
+  <div class="row">
+
+
+        <div class="col-4">
+          <button class="btn btn-dark" (click)="verLogsAlSistema()">Logs al sistema</button>
+        </div>
+
+        <div class="col-4">
+          <button class="btn btn-dark" (click)="verTurnosPorEspecialidad()">Turnos por especialidad</button>
+        </div>
+
+        <div class="col-4">
+          <button class="btn btn-dark" (click)="verTurnosPorDia()">Turnos por dia</button>
+        </div>
+        <div class="col-4">
+          <button class="btn btn-dark" (click)="verTurnosSolicitadosPorLapsoDeTiempo()">Turnos solicitados</button>
+        </div>
+  </div>
+
+    <div class="col-12" *ngIf="this.verLog">
+
+
+      <table class="table table-dark text-center">
+        <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+
+
+        </tr>
+      </thead>
+        <tbody>
+
+        <tr *ngFor="let log of this.logsOrdenadosPorDia" style="cursor: pointer;">
+          <td>{{log.usuario.nombre}} {{log.usuario.apellido}}</td>
+          <td>{{log.mes}}/{{log.dia}}</td>
+          <td>{{log.hora}}:{{log.minuto}} hs</td>
+
+        </tr>
+        </tbody>
+        </table>
+
+    </div>
+
+
+
+    <div class="row" *ngIf="this.turnosPorEspecialidad">
+
+
+      <highcharts-chart
+      [Highcharts]= "highcharts"
+      [options]="chartOptions"
+      style="width:100; height: 400px; display: block;" id="contenedor"
+      >
+
+      </highcharts-chart>
+      <!--
+      <script src="https://code.highcharts.com/highcharts.js"></script>
+      <script src="https://code.highcharts.com/modules/exportación.js"></script>
+      <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>-->
+      <button (click)="descargarPdf()">
+        <i class="fa fa-download"></i> Descargar PDF
+      </button>
+
+
+    </div>
+
+
+    <div class="row" *ngIf="this.turnosPorDia">
+
+      <highcharts-chart
+      [Highcharts]= "highcharts"
+      [options]="chartOptions"
+      style="width:100; height: 400px; display: block;">
+
+      </highcharts-chart>
+
+
+    </div>
+
+
+    <div class="row" *ngIf="this.turnosSolicitadosPorLapsoDeTiempo">
+
+      <highcharts-chart
+      [Highcharts]= "highcharts"
+      [options]="chartOptions"
+      style="width:100; height: 400px; display: block;">
+
+      </highcharts-chart>
+
+    </div>
+
+
+
+</div>

@@ -1,7 +1,7 @@
 import { AuthService } from 'src/app/servicios/auth.service';
-import { Injectable, ɵsetAllowDuplicateNgModuleIdsForTest } from '@angular/core';
-import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
+import { Injectable } from '@angular/core';
+
+import { FechaService } from './fecha.service';
 
 var pdfMake = require('pdfmake/build/pdfmake.js');
 var pdfFonts = require('pdfmake/build/vfs_fonts.js');
@@ -12,24 +12,8 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 export class PdfService {
 
-  constructor(private auth:AuthService) {
+  constructor(private fechaService: FechaService, private auth:AuthService) {
 
-   }
-
-   public obtenerFechaDeHoy()
-   {
-    const hoy=new Date();
-    hoy.getDate();
-
-    //const fechaFormato=format(hoy,'EEEE dd MMMM - HH:mm aaa', { locale: es });
-
-    const dia=format(hoy,'EEEE',{locale:es});
-    const numero=format(hoy,'dd',{locale:es});
-    const mes=format(hoy,'MMMM',{locale:es});
-    const mesNumero= format(hoy,'MM',{locale:es});
-    const anio=format(hoy,'yyyy',{locale:es});
-
-    return dia + " "+numero+" de "+mes+" del "+anio;
    }
 
   async descargarPdf(contenido:string)
@@ -38,7 +22,7 @@ export class PdfService {
     const definicionPdf:any={
       content:[
         {
-          text:this.obtenerFechaDeHoy(),
+          text:this.fechaService.obtenerFechaDeHoy(),
           alignment: "right",
           margin: [0, 0, 0, 20]
         },
@@ -71,12 +55,6 @@ export class PdfService {
           bold: true,
           margin: [0, 40, 0, 40]
         },
-        quote: {
-          italics: true
-        },
-        small: {
-          fontSize: 8
-        }
       }
     }
 

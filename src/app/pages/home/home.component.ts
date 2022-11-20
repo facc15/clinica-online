@@ -94,41 +94,47 @@ export class HomeComponent implements OnInit {
 
 
         this.usuarios.subscribe(res=>{
+try {
+  for(let item of res)
+  {
+    if(!this.auth.usuarioLog)
+      {
+        this.router.navigateByUrl('pages/bienvenido');
+      }
 
-          for(let item of res)
+    if(item.uid==this.auth.usuarioLog.uid)
+    {
+      if(item.perfil=='especialista' && !this.auth.usuarioLog.emailVerified)
+      {
+        this.router.navigateByUrl('pages/login/verificar-correo');
+      }
+      this.usuarioLog=item;
+      this.apellido=item.apellido;
+      this.nombre=item.nombre;
+      this.perfil=item.perfil;
+
+      this.firestore.traerFotos().then( async response=>{
+        for(let item2 of response.items)
+        {
+          const url=await getDownloadURL(item2);
+
+          if(item.pathPerfil==item2.name)
           {
-            if(!this.auth.usuarioLog)
-              {
-                this.router.navigateByUrl('pages/bienvenido');
-              }
-
-            if(item.uid==this.auth.usuarioLog.uid)
-            {
-              if(item.perfil=='especialista' && !this.auth.usuarioLog.emailVerified)
-              {
-                this.router.navigateByUrl('pages/login/verificar-correo');
-              }
-              this.usuarioLog=item;
-              this.apellido=item.apellido;
-              this.nombre=item.nombre;
-              this.perfil=item.perfil;
-
-              this.firestore.traerFotos().then( async response=>{
-                for(let item2 of response.items)
-                {
-                  const url=await getDownloadURL(item2);
-
-                  if(item.pathPerfil==item2.name)
-                  {
-                    this.foto=url;
-                  }
-                }
-
-                })
-                .catch(error=>{console.log(error);});
-
-            }
+            this.foto=url;
           }
+        }
+
+        })
+        .catch(error=>{console.log(error);});
+
+    }
+  }
+
+} catch (error)
+{
+
+}
+
         });
 
 
@@ -161,6 +167,11 @@ export class HomeComponent implements OnInit {
   irASolicitarTurno()
   {
     this.router.navigateByUrl('pages/home/turnos/sacar-turno');
+  }
+
+  irAInformes()
+  {
+    this.router.navigateByUrl('pages/home/informes');
   }
 
   irAUsuarios()

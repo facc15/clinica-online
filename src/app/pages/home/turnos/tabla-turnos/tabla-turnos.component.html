@@ -27,7 +27,7 @@
             <table class="table table-dark table-hover text-center">
               <tbody>
 
-            <tr *ngFor="let turno of this.turnos | turnosPaciente" style="cursor: pointer;">
+            <tr *ngFor="let turno of this.turnos | turnosPaciente | turnosFechaRepetida" style="cursor: pointer;">
              <td (click)="fechaSeleccionada(turno.fecha)">{{turno.fecha.dia}} {{turno.fecha.diaNumero}} de {{turno.fecha.mes}}</td>
            </tr>
             </tbody>
