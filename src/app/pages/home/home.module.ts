@@ -1,6 +1,6 @@
 import { PagesModule } from './../pages.module';
 import { ComponentsModule } from './../../components/components.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TurnosModule } from './turnos/turnos.module';
 import { LoginModule } from './../login/login.module';
 import { HomeComponent } from './home.component';
@@ -27,6 +27,7 @@ import { InformesComponent } from './informes/informes.component';
     FormsModule,
     ComponentsModule,
     HighchartsChartModule,
+    ReactiveFormsModule
   ],
   exports:[SeccionUsuariosComponent]
 })

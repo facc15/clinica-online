@@ -5,6 +5,12 @@
   margin: 1em auto;
 }
 
+button{
+  border-radius: 100%;
+  border-width: 10px;
+
+}
+
 .highcharts-data-table table {
   font-family: Verdana, sans-serif;
   border-collapse: collapse;

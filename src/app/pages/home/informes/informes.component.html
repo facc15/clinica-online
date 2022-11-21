@@ -1,30 +1,36 @@
 
 
-<div>
+<div class="container">
+
+  <div class="row mt-3">
+
+
+        <div class="col-2">
+          <button class="btn btn-dark" (click)="verLogsAlSistema()">Logs al sistema</button>
+        </div>
+
+        <div class="col-2">
+          <button class="btn btn-dark" (click)="verTurnosPorEspecialidad()">Turnos por especialidad</button>
+        </div>
+
+        <div class="col-2" style="margin-left:50px">
+          <button class="btn btn-dark" (click)="verTurnosPorDia()">Turnos por dia</button>
+        </div>
+        <div class="col-2" style="margin-left:20px">
+          <button class="btn btn-dark" (click)="verTurnosSolicitadosPorLapsoDeTiempo()">Turnos solicitados</button>
+        </div>
+        <div class="col-2" style="margin-left:40px">
+          <button class="btn btn-dark" (click)="verTurnosFinalizadosPorLapsoDeTiempo()">Turnos finalizados</button>
+        </div>
+  </div>
 
   <div class="row">
 
 
-        <div class="col-4">
-          <button class="btn btn-dark" (click)="verLogsAlSistema()">Logs al sistema</button>
-        </div>
-
-        <div class="col-4">
-          <button class="btn btn-dark" (click)="verTurnosPorEspecialidad()">Turnos por especialidad</button>
-        </div>
-
-        <div class="col-4">
-          <button class="btn btn-dark" (click)="verTurnosPorDia()">Turnos por dia</button>
-        </div>
-        <div class="col-4">
-          <button class="btn btn-dark" (click)="verTurnosSolicitadosPorLapsoDeTiempo()">Turnos solicitados</button>
-        </div>
-  </div>
-
-    <div class="col-12" *ngIf="this.verLog">
+    <div class="col-12"  *ngIf="this.verLog" style="height: 300px; overflow-y: scroll;"  >
 
 
-      <table class="table table-dark text-center">
+      <table class="table table-dark text-center ">
         <thead>
         <tr>
           <th>Usuario</th>
@@ -36,9 +42,9 @@
       </thead>
         <tbody>
 
-        <tr *ngFor="let log of this.logsOrdenadosPorDia" style="cursor: pointer;">
+        <tr *ngFor="let log of this.logsOrdenadosPorHora" class="overflow-auto" style="cursor: pointer; height:20px" >
           <td>{{log.usuario.nombre}} {{log.usuario.apellido}}</td>
-          <td>{{log.mes}}/{{log.dia}}</td>
+          <td>{{log.dia}}/{{log.mes}}</td>
           <td>{{log.hora}}:{{log.minuto}} hs</td>
 
         </tr>
@@ -47,7 +53,23 @@
 
     </div>
 
+    <div class="row">
 
+
+      <div class="col-12" *ngIf="this.verLog">
+
+        <highcharts-chart
+        [Highcharts]= "highcharts"
+        [options]="chartOptions"
+        style="width:100; height: 400px; display: block;" id="contenedor"
+        >
+        </highcharts-chart>
+
+      </div>
+
+    </div>
+
+  </div>
 
     <div class="row" *ngIf="this.turnosPorEspecialidad">
 
@@ -57,17 +79,7 @@
       [options]="chartOptions"
       style="width:100; height: 400px; display: block;" id="contenedor"
       >
-
       </highcharts-chart>
-      <!--
-      <script src="https://code.highcharts.com/highcharts.js"></script>
-      <script src="https://code.highcharts.com/modules/exportación.js"></script>
-      <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>-->
-      <button (click)="descargarPdf()">
-        <i class="fa fa-download"></i> Descargar PDF
-      </button>
-
-
     </div>
 
 
@@ -84,7 +96,65 @@
     </div>
 
 
-    <div class="row" *ngIf="this.turnosSolicitadosPorLapsoDeTiempo">
+  <div class="row" *ngIf="this.turnosSolicitadosPorLapsoDeTiempo">
+
+    <div class="col-12" *ngIf="!this.verGraf">
+
+      <form [formGroup]="this.form">
+
+        <div class="row align-items-center d-flex justify-content-center">
+
+            <div class="col-3 d-flex text-end align-items-end justify-content-end">
+               <span *ngIf="this.form.get('diaInicio')?.hasError('max') || this.form.get('diaInicio')?.hasError('min')" class="text-danger">
+                dia inválido&nbsp;
+              </span>
+              Desde:&nbsp; <input style="width:50px;" type="number"  formControlName="diaInicio">
+
+            </div>
+          <div class="col-3 text-start align-items-start justify-content-start d-flex">
+           <strong style="margin-right:20px;">/</strong> <input style="margin-left:5px; width:50px;" type="number"  formControlName="mesInicio">
+            &nbsp; <span *ngIf="this.form.get('mesInicio')?.hasError('max') || this.form.get('mesInicio')?.hasError('min')" class="text-danger">
+              mes inválido
+            </span>
+          </div>
+        </div>
+
+
+        <div class="row align-items-center d-flex justify-content-center">
+
+            <div class="col-3 d-flex text-end align-items-end justify-content-end">
+               <span *ngIf="this.form.get('diaFinal')?.hasError('max') || this.form.get('diaFinal')?.hasError('min')" class="text-danger">
+                dia inválido
+              </span>&nbsp;
+              Hasta:&nbsp; <input style="width:50px;" type="number"  formControlName="diaFinal">
+
+            </div>
+          <div class="col-3 text-start align-items-start justify-content-start d-flex">
+           <strong style="margin-right:20px;">/</strong> <input style="margin-left:5px; width:50px;" type="number"  formControlName="mesFinal">
+            &nbsp; <span *ngIf="this.form.get('mesFinal')?.hasError('max') || this.form.get('mesFinal')?.hasError('min')" class="text-danger">
+              mes inválido
+            </span>
+          </div>
+        </div>
+        <div class="row align-items-center d-flex justify-content-center">
+            <div class="col-3 text-center">
+              <button type="button" class="btn btn-success" (click)="verTurnosSolicitadosPorLapsoDeTiempoGraf()" [disabled]="this.form.invalid" >
+               Confirmar
+              </button>
+            </div>
+        </div>
+        <br>
+      </form>
+    </div>
+
+    <div class="col-12 align-items-center justify-content-center d-flex" *ngIf="this.noHayTurnos">
+
+<span class="text-danger text-center"><strong>No hay turnos solicitados en ese lapso de tiempo</strong></span>
+    </div>
+
+
+    <div class="col-12" *ngIf="this.verGraf">
+
 
       <highcharts-chart
       [Highcharts]= "highcharts"
@@ -92,9 +162,83 @@
       style="width:100; height: 400px; display: block;">
 
       </highcharts-chart>
-
     </div>
+  </div>
+    <!--FINALIZADOS-->
+    <div class="row" *ngIf="this.turnosFinalizadosPorLapsoDeTiempo">
+
+      <div class="col-12" *ngIf="!this.verGraf">
+
+        <form [formGroup]="this.form">
+
+          <div class="row align-items-center d-flex justify-content-center">
+
+              <div class="col-3 d-flex text-end align-items-end justify-content-end">
+                 <span *ngIf="this.form.get('diaInicio')?.hasError('max') || this.form.get('diaInicio')?.hasError('min')" class="text-danger">
+                  dia inválido&nbsp;
+                </span>
+                Desde:&nbsp; <input style="width:50px;" type="number"  formControlName="diaInicio">
+
+              </div>
+            <div class="col-3 text-start align-items-start justify-content-start d-flex">
+             <strong style="margin-right:20px;">/</strong> <input style="margin-left:5px; width:50px;" type="number"  formControlName="mesInicio">
+              &nbsp; <span *ngIf="this.form.get('mesInicio')?.hasError('max') || this.form.get('mesInicio')?.hasError('min')" class="text-danger">
+                mes inválido
+              </span>
+            </div>
+          </div>
+
+
+          <div class="row align-items-center d-flex justify-content-center">
+
+              <div class="col-3 d-flex text-end align-items-end justify-content-end">
+                 <span *ngIf="this.form.get('diaFinal')?.hasError('max') || this.form.get('diaFinal')?.hasError('min')" class="text-danger">
+                  dia inválido
+                </span>&nbsp;
+                Hasta:&nbsp; <input style="width:50px;" type="number"  formControlName="diaFinal">
+
+              </div>
+            <div class="col-3 text-start align-items-start justify-content-start d-flex">
+             <strong style="margin-right:20px;">/</strong> <input style="margin-left:5px; width:50px;" type="number"  formControlName="mesFinal">
+              &nbsp; <span *ngIf="this.form.get('mesFinal')?.hasError('max') || this.form.get('mesFinal')?.hasError('min')" class="text-danger">
+                mes inválido
+              </span>
+            </div>
+          </div>
+          <div class="row align-items-center d-flex justify-content-center">
+              <div class="col-3 text-center">
+                <button type="button" class="btn btn-success" (click)="verTurnosFinalizadosPorLapsoDeTiempoGraf()" [disabled]="this.form.invalid" >
+                 Confirmar
+                </button>
+              </div>
+          </div>
+          <br>
+        </form>
+      </div>
+
+      <div class="col-12 align-items-center justify-content-center d-flex" *ngIf="this.noHayTurnos">
+
+  <span class="text-danger text-center"><strong>No hay turnos finalizados en ese lapso de tiempo</strong></span>
+      </div>
+
+
+      <div class="col-12" *ngIf="this.verGraf">
+
+
+        <highcharts-chart
+        [Highcharts]= "highcharts"
+        [options]="chartOptions"
+        style="width:100; height: 400px; display: block;">
+
+        </highcharts-chart>
+      </div>
 
 
 
+
+</div>
+<div class="row mt-2">
+  <div class="col-12 justify-content-center align-items-center d-flex">
+    <button class="btn btn-danger text-center" routerLink="../">Volver</button>
+  </div>
 </div>

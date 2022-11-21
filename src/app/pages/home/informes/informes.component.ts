@@ -18,6 +18,7 @@ HC_exportData(Highcharts);
 
 import ExportingModule from 'highcharts/modules/exporting';
 import DownloadingModule from 'highcharts/modules/export-data.js';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 ExportingModule(Highcharts);
 DownloadingModule(Highcharts);
@@ -40,15 +41,19 @@ export class InformesComponent implements OnInit {
   turnosPorEspecialidad:boolean=false;
   turnosPorDia:boolean=false;
   turnosSolicitadosPorLapsoDeTiempo:boolean=false;
-  turnosfinalizadosPorLapsoDeTiempo:boolean=false;
+  turnosFinalizadosPorLapsoDeTiempo:boolean=false;
+  noHayTurnos:boolean=false;
+  verGraf:boolean=false;
 
 
   turnos:Turno[];
   turnosOrdenadosPorDia: Turno[];
   turnosOrdenadosPorMes:Turno[];
+  turnosPorLapsoDeTiempo: Turno[];
 
   logsOrdenadosPorDia: Log[];
   logsOrdenadosPorMes:Log[];
+  logsOrdenadosPorHora:Log[];
   fechas: string[];
   array: any[];
 
@@ -59,15 +64,25 @@ export class InformesComponent implements OnInit {
   highcharts=Highcharts;
 
   chartOptions: any;
+  public form: FormGroup;
 
-  constructor(private firestore: FirestoreService,private turnoService: TurnoService) {
+  constructor(public builder :FormBuilder,private firestore: FirestoreService,private turnoService: TurnoService) {
+    this.form= this.builder.group({
+      'mesInicio':['',[Validators.required,Validators.min(1),Validators.max(12)]],
+      'diaInicio':['',[Validators.required,Validators.min(1),Validators.max(31)]],
+      'mesFinal':['',[Validators.required,Validators.min(1),Validators.max(12)]],
+      'diaFinal':['',[Validators.required,Validators.min(1),Validators.max(31)]],
+
+    });
     this.map=new Map();
     this.data={name:{},data:{}} as Data;
     this.turnos=[];
     this.turnosOrdenadosPorDia=[];
     this.turnosOrdenadosPorMes=[];
+    this.turnosPorLapsoDeTiempo=[];
     this.logsOrdenadosPorDia=[];
     this.logsOrdenadosPorMes=[];
+    this.logsOrdenadosPorHora=[];
     this.fechas=[];
     this.array=[];
   }
@@ -78,10 +93,10 @@ export class InformesComponent implements OnInit {
 
       this.logsOrdenadosPorMes=this.logs.sort((log:Log,log2:Log)=>{
 
-        if(log.mes<log2.mes)
+        if(log.mes>log2.mes)
         {
           return -1;
-        }else if(log.mes>log2.mes)
+        }else if(log.mes<log2.mes)
         {
           return 1;
         }else
@@ -96,15 +111,35 @@ export class InformesComponent implements OnInit {
 
         if(log.mes==log2.mes)
         {
-          if(log.dia<log2.dia)
+          if(log.dia>log2.dia)
           {
             return -1;
-          }else if(log.dia>log2.dia)
+          }else if(log.dia<log2.dia)
           {
             return 1;
           }else
           {
-            return 0;
+            if(log.hora>log2.hora)
+            {
+              return -1;
+            }else if(log.hora<log2.hora)
+            {
+              return 1;
+            }else
+            {
+              if(log.minuto>log2.minuto)
+              {
+                return -1;
+
+              }else if(log.minuto>log2.minuto)
+              {
+                return 1;
+              }
+              else{
+                return 0;
+              }
+            }
+
           }
         }
 
@@ -112,6 +147,22 @@ export class InformesComponent implements OnInit {
         return 0;
 
       });
+
+      this.logsOrdenadosPorHora=this.logsOrdenadosPorDia.sort((log:Log,log2:Log)=>{
+
+        if(log.dia>log2.dia)
+        {
+          return -1;
+        }else if(log.dia<log2.dia)
+        {
+          return 1;
+        }else
+        {
+          return 0;
+        }
+
+    });
+
 
     });
 
@@ -168,8 +219,101 @@ export class InformesComponent implements OnInit {
     this.turnosPorEspecialidad=false;
     this.turnosPorDia=false;
     this.turnosSolicitadosPorLapsoDeTiempo=false;
-    this.turnosfinalizadosPorLapsoDeTiempo=false;
+    this.turnosFinalizadosPorLapsoDeTiempo=false;
 
+    this.datas=[];
+
+    for (const log of this.logsOrdenadosPorDia)
+    {
+      let data= {name:{},y:{}} as Data;
+      data.y=0;
+      let fecha= log.dia+"/"+log.mes+" "+log.hora+":"+log.minuto+" hs";
+      data.name=log.usuario.nombre+" "+log.usuario.apellido;
+
+      this.fechas.push(fecha);
+
+      if(!this.datas.some(dat=>dat.name==data.name))
+      {
+        this.datas.push(data);
+      }
+
+    }
+
+    this.datas.forEach((data,index)=>{
+
+
+       let cantidadLogs= this.cuantosLogsUsuarios(data,this.logsOrdenadosPorDia);
+
+        this.datas[index].y=cantidadLogs;
+    });
+
+    console.log(this.datas);
+    this.chartOptions={
+      credits:{
+        enabled:false,
+      },
+      chart:{
+        type:'pie'
+      },
+      title:{
+        text:'Promedio de logs por usuario'
+      },
+      xAxis:{
+        title:{
+          text: 'Usuarios'
+        },
+        categories:"",
+        crosshair:true,
+
+      },
+      yAxis:{
+        title:{
+
+          text:'Logs'
+        }
+
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+          }
+        }
+      },
+      series: [{name:'Logs',data:this.datas}],
+      exporting: {
+        allowHTML: true,
+
+        pdfFont: {
+          normal: 'https://www.highcharts.com/samples/data/fonts/NotoSans-Regular.ttf',
+          bold: 'https://www.highcharts.com/samples/data/fonts/NotoSans-Bold.ttf',
+          bolditalic: 'https://www.highcharts.com/samples/data/fonts/NotoSans-BoldItalic.ttf',
+          italic: 'https://www.highcharts.com/samples/data/fonts/NotoSans-Italic.ttf'
+      }
+      }
+
+    };
+
+
+
+  }
+
+  cuantosLogsUsuarios(data:Data,logs:Log[])
+  {
+    let contador=0;
+
+    for (const log of logs)
+    {
+       if(data.name==log.usuario.nombre+" "+log.usuario.apellido)
+       {
+        contador++;
+       }
+
+    }
+    return contador;
   }
 
 
@@ -180,7 +324,7 @@ export class InformesComponent implements OnInit {
     this.turnosPorEspecialidad=!this.turnosPorEspecialidad;
     this.turnosPorDia=false;
     this.turnosSolicitadosPorLapsoDeTiempo=false;
-    this.turnosfinalizadosPorLapsoDeTiempo=false;
+    this.turnosFinalizadosPorLapsoDeTiempo=false;
 
     this.datas=[];
 
@@ -208,9 +352,6 @@ export class InformesComponent implements OnInit {
         this.datas[index].data[0]=cantidadTurnos;
     });
 
-
-    const mapeado=this.datas.map(data=>data.name);
-    console.log(mapeado);
     this.chartOptions={
       credits:{
         enabled:false,
@@ -257,7 +398,7 @@ export class InformesComponent implements OnInit {
     this.turnosPorEspecialidad=false;
     this.verLog=false;
     this.turnosSolicitadosPorLapsoDeTiempo=false;
-    this.turnosfinalizadosPorLapsoDeTiempo=false;
+    this.turnosFinalizadosPorLapsoDeTiempo=false;
     this.turnosPorDia=!this.turnosPorDia;
 
     this.fechas=[];
@@ -374,17 +515,135 @@ export class InformesComponent implements OnInit {
   verTurnosSolicitadosPorLapsoDeTiempo()
   {
     this.turnosSolicitadosPorLapsoDeTiempo=true;
-    this.turnosfinalizadosPorLapsoDeTiempo=false;
+    this.turnosFinalizadosPorLapsoDeTiempo=false;
     this.verLog=false;
+    this.verGraf=false;
     this.turnosPorDia=false;
     this.turnosPorEspecialidad=false;
 
+
+
+  }
+
+  verTurnosSolicitadosPorLapsoDeTiempoGraf()
+  {
+    this.fechas=[];
+    this.datas=[];
+    this.turnosPorLapsoDeTiempo=[];
+    this.noHayTurnos=false;
+
+
+    const fechaElegida={mesInicio:{},diaInicio:{},mesFinal:{},diaFinal:{}};
+
+    fechaElegida.diaInicio=this.form.value.diaInicio;
+    fechaElegida.mesInicio=this.form.value.mesInicio;
+    fechaElegida.diaFinal=this.form.value.diaFinal;
+    fechaElegida.mesFinal=this.form.value.mesFinal;
+
+
+    for (const turno of this.turnosOrdenadosPorDia)
+    {
+      if(fechaElegida.mesInicio>turno.fecha.mesNumero)
+      {
+      continue;
+      }else if(fechaElegida.mesInicio==turno.fecha.mesNumero)
+      {
+        if(fechaElegida.diaInicio>turno.fecha.diaNumero)
+        {
+          continue;
+        }
+
+      }else if(fechaElegida.mesInicio<turno.fecha.mesNumero)
+
+        if(fechaElegida.mesFinal<turno.fecha.mesNumero)
+        {
+          continue;
+
+        }else if(fechaElegida.mesFinal==turno.fecha.mesNumero)
+        {
+
+          if(fechaElegida.diaFinal<turno.fecha.diaNumero)
+          {
+            continue;
+          }
+
+        }
+        this.turnosPorLapsoDeTiempo.push(turno);
+      }
+
+for (const turno of this.turnosPorLapsoDeTiempo)
+    {
+      let data= {name:{},data:{}} as Data;
+      data.data=[];
+      let fecha= turno.fecha.diaNumero+"/"+turno.fecha.mesNumero;
+      data.name=turno.especialista;
+
+
+      if(!this.fechas.includes(fecha))
+      {
+        this.fechas.push(fecha);
+
+        if(!this.datas.some(dat=>dat.name==data.name))
+        {
+          this.datas.push(data);
+        }
+      }else
+      {
+        if(!this.datas.some(dat=>dat.name==data.name))
+        {
+          this.datas.push(data);
+        }
+      }
+
+    }
+
+    this.datas.forEach((data,index)=>{
+
+      this.fechas.forEach((fechi,i)=>{
+
+
+       let cantidadTurnos= this.cuantosTurnosSolicitadosEspecialistas(data,this.turnosPorLapsoDeTiempo,fechi);
+
+        this.datas[index].data[i]=cantidadTurnos;
+
+      });
+
+    });
+
+
+    let vacio=true;
+    for (const data of this.datas) {
+
+      for (const dati of data.data) {
+
+        if(dati>0)
+        {
+          vacio=false
+          break;
+        }
+      }
+
+
+    }
+
+
+    if(this.datas.length>0 && !vacio)
+    this.verGraf=true;
+    else
+    this.noHayTurnos=true;
+
     this.chartOptions={
+      credits:{
+        enabled:false,
+      },
+      chart:{
+        type:'bar'
+      },
       title: {
-        text:'Turnos por especialidad'
+        text:'Turnos solicitados desde '+fechaElegida.diaInicio+"/"+fechaElegida.mesInicio +' hasta '+fechaElegida.diaFinal+"/"+fechaElegida.mesFinal
       },
       xAxis:{
-        categories:['2/11','3/11'],
+        categories:this.fechas,
         title:{
           text:'Fechas'
 
@@ -396,9 +655,8 @@ export class InformesComponent implements OnInit {
         }
 
       },
-      series:[{name:'algo', data:[1,2,3]},{name:'aaaalgo', data:[2,4,1]}],
+      series:this.datas,
       exporting: {
-        showTable: true,
         allowHTML: true,
         pdfFont: {
           normal: 'https://www.highcharts.com/samples/data/fonts/NotoSans-Regular.ttf',
@@ -410,22 +668,199 @@ export class InformesComponent implements OnInit {
 
     };
 
+  }
+
+  cuantosTurnosSolicitadosEspecialistas(data:Data,turnos:Turno[],fechi: string)
+  {
+    let contador=0;
+
+    for (const turno of turnos)
+    {
+       let fecha= turno.fecha.diaNumero+"/"+turno.fecha.mesNumero;
+
+       if(fechi==fecha && data.name==turno.especialista && turno.estado=='pendiente')
+       {
+        contador++;
+       }
+
+    }
+    return contador;
+  }
+
+  cuantosTurnosFinalizadosEspecialistas(data:Data,turnos:Turno[],fechi: string)
+  {
+    let contador=0;
+
+    for (const turno of turnos)
+    {
+       let fecha= turno.fecha.diaNumero+"/"+turno.fecha.mesNumero;
+
+       if(fechi==fecha && data.name==turno.especialista && turno.estado=='finalizado')
+       {
+        contador++;
+       }
+
+    }
+    return contador;
+  }
+
+  verTurnosFinalizadosPorLapsoDeTiempoGraf()
+  {
+    this.fechas=[];
+    this.datas=[];
+    this.turnosPorLapsoDeTiempo=[];
+    this.noHayTurnos=false;
+
+
+    const fechaElegida={mesInicio:{},diaInicio:{},mesFinal:{},diaFinal:{}};
+
+    fechaElegida.diaInicio=this.form.value.diaInicio;
+    fechaElegida.mesInicio=this.form.value.mesInicio;
+    fechaElegida.diaFinal=this.form.value.diaFinal;
+    fechaElegida.mesFinal=this.form.value.mesFinal;
+
+
+    console.log(fechaElegida);
+
+
+    for (const turno of this.turnosOrdenadosPorDia)
+    {
+      if(fechaElegida.mesInicio>turno.fecha.mesNumero)
+      {
+      continue;
+      }else if(fechaElegida.mesInicio==turno.fecha.mesNumero)
+      {
+        if(fechaElegida.diaInicio>turno.fecha.diaNumero)
+        {
+          continue;
+        }
+
+      }else if(fechaElegida.mesInicio<turno.fecha.mesNumero)
+
+        if(fechaElegida.mesFinal<turno.fecha.mesNumero)
+        {
+          continue;
+
+        }else if(fechaElegida.mesFinal==turno.fecha.mesNumero)
+        {
+
+          if(fechaElegida.diaFinal<turno.fecha.diaNumero)
+          {
+            continue;
+          }
+
+        }
+        this.turnosPorLapsoDeTiempo.push(turno);
+      }
+
+for (const turno of this.turnosPorLapsoDeTiempo)
+    {
+      let data= {name:{},data:{}} as Data;
+      data.data=[];
+      let fecha= turno.fecha.diaNumero+"/"+turno.fecha.mesNumero;
+      data.name=turno.especialista;
+
+
+      if(!this.fechas.includes(fecha))
+      {
+        this.fechas.push(fecha);
+
+        if(!this.datas.some(dat=>dat.name==data.name))
+        {
+          this.datas.push(data);
+        }
+      }else
+      {
+        if(!this.datas.some(dat=>dat.name==data.name))
+        {
+          this.datas.push(data);
+        }
+      }
+
+    }
+
+    this.datas.forEach((data,index)=>{
+
+      this.fechas.forEach((fechi,i)=>{
+
+
+       let cantidadTurnos= this.cuantosTurnosFinalizadosEspecialistas(data,this.turnosPorLapsoDeTiempo,fechi);
+
+        this.datas[index].data[i]=cantidadTurnos;
+
+      });
+
+
+
+    });
+    let vacio=true;
+    for (const data of this.datas) {
+
+      for (const dati of data.data) {
+
+        if(dati>0)
+        {
+          vacio=false
+          break;
+        }
+      }
+
+
+    }
+
+    if(this.datas.length>0 && !vacio)
+    this.verGraf=true;
+    else
+    this.noHayTurnos=true;
+
+    this.chartOptions={
+      credits:{
+        enabled:false,
+      },
+      chart:{
+        type:'areaspline'
+      },
+      title: {
+        text:'Turnos finalizados desde '+fechaElegida.diaInicio+"/"+fechaElegida.mesInicio +' hasta '+fechaElegida.diaFinal+"/"+fechaElegida.mesFinal
+      },
+      xAxis:{
+        categories:this.fechas,
+        title:{
+          text:'Fechas'
+
+        }
+      },
+      yAxis:{
+        title:{
+          text:'Cantidad de turnos'
+        }
+
+      },
+      series:this.datas,
+      exporting: {
+        allowHTML: true,
+        pdfFont: {
+          normal: 'https://www.highcharts.com/samples/data/fonts/NotoSans-Regular.ttf',
+          bold: 'https://www.highcharts.com/samples/data/fonts/NotoSans-Bold.ttf',
+          bolditalic: 'https://www.highcharts.com/samples/data/fonts/NotoSans-BoldItalic.ttf',
+          italic: 'https://www.highcharts.com/samples/data/fonts/NotoSans-Italic.ttf'
+      }
+      }
+
+    };
 
   }
 
   verTurnosFinalizadosPorLapsoDeTiempo()
   {
-
+    this.turnosPorDia=false;
+    this.turnosPorEspecialidad=false;
+    this.turnosSolicitadosPorLapsoDeTiempo=false;
+    this.turnosFinalizadosPorLapsoDeTiempo=true;
+    this.verGraf=false;
+    this.verLog=false;
   }
 
-  descargarPdf()
-  {
-    let id= document.getElementById('pdf');
-    document.getElementById('pdf')?.addEventListener('click', function () {
-
-
-  })
-  }
 
 
 }

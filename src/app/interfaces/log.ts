@@ -12,5 +12,6 @@ export interface Data{
 
   name: string;
   data: number[];
+  y: number;
 
 }
