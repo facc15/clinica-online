@@ -20,6 +20,8 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -38,6 +40,6 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
     BrowserAnimationsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

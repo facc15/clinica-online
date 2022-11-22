@@ -51,9 +51,6 @@ export class TurnosEspecialistaPacienteOrdenadoPipe implements PipeTransform
     this.turnosFiltradosOrdenados.splice(3);
    }
 
-
-    console.log(this.turnosFiltradosOrdenados);
-
     return this.turnosFiltradosOrdenados;
   }
 

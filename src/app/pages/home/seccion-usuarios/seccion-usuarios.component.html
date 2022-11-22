@@ -22,7 +22,7 @@
 
 
     <button (click)="descargarUsuario(usuario)"  class="boton btn btn-dark" [ngClass]="{'text-info':usuario.perfil=='paciente','especialista':usuario.perfil=='especialista'}">
-      <img style="border-radius:100%" [src]="usuario.pathPerfil" width="80" height="60"><br>
+      <img imagenDirectiva style="border-radius:100%" [src]="usuario?.pathPerfil" width="80" height="60"><br>
       {{usuario.nombre }} {{usuario.apellido}}
     </button>
   </div>

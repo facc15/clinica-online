@@ -43,7 +43,8 @@ export class TurnosEspecialidadComponent implements OnInit {
   ngOnInit(): void {
     if(this.especialidad)
     {
-      this.turnosFiltrados= this.turnos.filter(turno=>turno.especialidad==this.especialidad);
+      this.turnosFiltrados= this.turnos.filter(turno=>turno.especialidad.especialidad==this.especialidad);
+      //console.log(this.turnosFiltrados);
 
     }else if(this.estado)
     {

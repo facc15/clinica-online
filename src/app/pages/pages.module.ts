@@ -1,3 +1,4 @@
+import { ComponentsModule } from './../components/components.module';
 import { TurnosModule } from './home/turnos/turnos.module';
 import { HomeModule } from './home/home.module';
 import { LoginModule } from './login/login.module';
@@ -21,6 +22,7 @@ import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
     PagesRoutingModule,
     LoginModule,
     HomeModule,
+    ComponentsModule,
     TurnosModule
 
   ],

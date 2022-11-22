@@ -6,21 +6,21 @@
 
 
         <div class="col-2">
-          <button class="btn btn-dark" (click)="verLogsAlSistema()">Logs al sistema</button>
+          <button botonDirectiva class="btn btn-dark" (click)="verLogsAlSistema()">Logs al sistema</button>
         </div>
 
         <div class="col-2">
-          <button class="btn btn-dark" (click)="verTurnosPorEspecialidad()">Turnos por especialidad</button>
+          <button botonDirectiva class="btn btn-dark" (click)="verTurnosPorEspecialidad()">Turnos por especialidad</button>
         </div>
 
-        <div class="col-2" style="margin-left:50px">
-          <button class="btn btn-dark" (click)="verTurnosPorDia()">Turnos por dia</button>
+        <div  class="col-2" style="margin-left:50px">
+          <button botonDirectiva class="btn btn-dark" (click)="verTurnosPorDia()">Turnos por dia</button>
         </div>
         <div class="col-2" style="margin-left:20px">
-          <button class="btn btn-dark" (click)="verTurnosSolicitadosPorLapsoDeTiempo()">Turnos solicitados</button>
+          <button botonDirectiva class="btn btn-dark" (click)="verTurnosSolicitadosPorLapsoDeTiempo()">Turnos solicitados</button>
         </div>
         <div class="col-2" style="margin-left:40px">
-          <button class="btn btn-dark" (click)="verTurnosFinalizadosPorLapsoDeTiempo()">Turnos finalizados</button>
+          <button botonDirectiva class="btn btn-dark" (click)="verTurnosFinalizadosPorLapsoDeTiempo()">Turnos finalizados</button>
         </div>
   </div>
 
@@ -136,7 +136,8 @@
             </span>
           </div>
         </div>
-        <div class="row align-items-center d-flex justify-content-center">
+
+        <div class="row mt-3 align-items-center d-flex justify-content-center">
             <div class="col-3 text-center">
               <button type="button" class="btn btn-success" (click)="verTurnosSolicitadosPorLapsoDeTiempoGraf()" [disabled]="this.form.invalid" >
                Confirmar
@@ -205,7 +206,7 @@
               </span>
             </div>
           </div>
-          <div class="row align-items-center d-flex justify-content-center">
+          <div class="row mt-3 align-items-center d-flex justify-content-center">
               <div class="col-3 text-center">
                 <button type="button" class="btn btn-success" (click)="verTurnosFinalizadosPorLapsoDeTiempoGraf()" [disabled]="this.form.invalid" >
                  Confirmar

@@ -13,6 +13,8 @@ import { SeccionUsuariosComponent } from './seccion-usuarios/seccion-usuarios.co
 import { InformesComponent } from './informes/informes.component';
 
 
+
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -25,8 +27,8 @@ import { InformesComponent } from './informes/informes.component';
     LoginModule,
     TurnosModule,
     FormsModule,
-    ComponentsModule,
     HighchartsChartModule,
+    ComponentsModule,
     ReactiveFormsModule
   ],
   exports:[SeccionUsuariosComponent]

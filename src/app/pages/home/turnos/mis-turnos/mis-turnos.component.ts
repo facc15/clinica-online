@@ -59,7 +59,6 @@ export class MisTurnosComponent implements OnInit {
     this.turnoService.obtenerTurnos().subscribe(value =>
     {
         this.turnos = value;
-        console.log(this.turnos);
     });
 
     this.fechas=[];

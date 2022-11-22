@@ -1,3 +1,4 @@
+
 import { ComponentsModule } from './../../../components/components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SacarTurnoComponent } from './sacar-turno/sacar-turno.component';
@@ -82,6 +83,11 @@ import { CardsPacientesComponent } from './cards-pacientes/cards-pacientes.compo
     ComponentsModule,
     FormsModule
   ],
-  exports:[MisTurnosComponent,SacarTurnoComponent,VerHistoriaClinicaComponent,TablaPacientesComponent,CardsPacientesComponent,FiltroEspecialidadesPacientePipe]
+  exports:[MisTurnosComponent,
+          SacarTurnoComponent,
+          VerHistoriaClinicaComponent,
+          TablaPacientesComponent,
+          CardsPacientesComponent,
+          FiltroEspecialidadesPacientePipe]
 })
 export class TurnosModule { }

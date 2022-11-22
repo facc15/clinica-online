@@ -205,7 +205,7 @@ export class InformesComponent implements OnInit {
         return 0;
 
       });
-      console.log(this.turnosOrdenadosPorDia);
+
     });
 
 
@@ -553,6 +553,15 @@ export class InformesComponent implements OnInit {
           continue;
         }
 
+        if(fechaElegida.mesFinal==turno.fecha.mesNumero)
+        {
+          if(fechaElegida.diaFinal<turno.fecha.diaNumero)
+          {
+            continue;
+          }
+
+        }
+
       }else if(fechaElegida.mesInicio<turno.fecha.mesNumero)
 
         if(fechaElegida.mesFinal<turno.fecha.mesNumero)
@@ -561,7 +570,6 @@ export class InformesComponent implements OnInit {
 
         }else if(fechaElegida.mesFinal==turno.fecha.mesNumero)
         {
-
           if(fechaElegida.diaFinal<turno.fecha.diaNumero)
           {
             continue;
@@ -570,7 +578,6 @@ export class InformesComponent implements OnInit {
         }
         this.turnosPorLapsoDeTiempo.push(turno);
       }
-
 for (const turno of this.turnosPorLapsoDeTiempo)
     {
       let data= {name:{},data:{}} as Data;
@@ -735,6 +742,14 @@ for (const turno of this.turnosPorLapsoDeTiempo)
           continue;
         }
 
+        if(fechaElegida.mesFinal==turno.fecha.mesNumero)
+        {
+          if(fechaElegida.diaFinal<turno.fecha.diaNumero)
+          {
+            continue;
+          }
+        }
+
       }else if(fechaElegida.mesInicio<turno.fecha.mesNumero)
 
         if(fechaElegida.mesFinal<turno.fecha.mesNumero)
@@ -748,7 +763,6 @@ for (const turno of this.turnosPorLapsoDeTiempo)
           {
             continue;
           }
-
         }
         this.turnosPorLapsoDeTiempo.push(turno);
       }

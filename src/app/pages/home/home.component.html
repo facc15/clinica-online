@@ -4,8 +4,8 @@
 
     <div class="dropdown d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
       <a  class="d-flex justify-content-center align-items-center text-white text-decoration-none">
-        <img src="{{this.foto}}" alt="" width="58" height="58" class="rounded-circle me-2">
-      <strong *ngIf="this.nombre">Bienvenido, {{this.nombre}}!</strong>
+        <img imagenDirectiva src="{{this.foto}}" alt="" width="58" height="58" class="rounded-circle me-2">
+      <strong mouseDirectiva *ngIf="this.nombre">Bienvenido, {{this.nombre}}!</strong>
       </a>
     </div>
     <hr>
@@ -14,50 +14,50 @@
       <li class="mt-4 text-center">
         <a  class="nav-link text-white" style="cursor:pointer;" (click)="irAMiPerfil()">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-          <img src="../../../assets/icos/perfil.png"  width="50" height="50"> Mi perfil
+          <img src="../../../assets/icos/perfil.png"  width="50" height="50"> <span mouseDirectiva>Mi perfil</span>
         </a>
       </li>
 
       <li class="mt-4 text-center">
         <a class="nav-link text-white" style="cursor:pointer;" *ngIf="this.perfil=='administrador' || this.perfil=='paciente'" (click)="irASolicitarTurno()">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-          <img src="../../../assets/icos/mano.png"  width="50" height="50">      Solicitar turno
+          <img src="../../../assets/icos/mano.png"  width="50" height="50">  <span mouseDirectiva>Solicitar turno</span>
         </a>
       </li>
       <li class="mt-4 nav-item text-center" (click)="irATurnos()">
         <a class="nav-link text-white" aria-current="page" style="cursor:pointer;">
           <svg class="bi me-2" width="16" height="16" ></svg>
           <img src="../../../assets/icos/turno.png"  width="50" height="50">
-          <span *ngIf="this.perfil=='paciente' || this.perfil=='especialista'">Mis turnos</span>
-          <span *ngIf="this.perfil=='administrador'">Turnos</span>
+          <span *ngIf="this.perfil=='paciente' || this.perfil=='especialista'" mouseDirectiva >Mis turnos</span>
+          <span *ngIf="this.perfil=='administrador'" mouseDirectiva >Turnos</span>
         </a>
       </li>
 
       <li class="mt-4 nav-item text-center" *ngIf="this.perfil=='especialista'" (click)="irAElegirPaciente()">
         <a class="nav-link text-white" aria-current="page" style="cursor:pointer;">
           <svg class="bi me-2" width="16" height="16" ></svg>
-          <img src="../../../assets/icos/pacientes.png"  width="50" height="50">   <span >Pacientes</span>
+          <img src="../../../assets/icos/pacientes.png"  width="50" height="50">   <span mouseDirectiva>Pacientes</span>
         </a>
       </li>
 
       <li class="mt-4 text-center">
         <a  class="nav-link text-white" *ngIf="this.perfil=='administrador'" style="cursor:pointer;" (click)="irAUsuarios()">
           <svg class="bi me-2" width="16" height="16"></svg>
-          <img src="../../../assets/icos/usuarios.png"  width="50" height="50">  Usuarios
+          <img src="../../../assets/icos/usuarios.png"  width="50" height="50">  <span mouseDirectiva>Usuarios</span>
         </a>
       </li>
 
       <li class="mt-4 text-center">
         <a  class="nav-link text-white" *ngIf="this.perfil=='administrador'" style="cursor:pointer;" (click)="irAInformes()">
           <svg class="bi me-2" width="16" height="16"></svg>
-          <img src="../../../assets/icos/informe.png"  width="50" height="50">  Informes
+          <img src="../../../assets/icos/informe.png"  width="50" height="50">   <span mouseDirectiva>Informes</span>
         </a>
       </li>
 
       <li class="mt-4 text-center">
         <a  class="nav-link text-white"  style="cursor:pointer;" (click)="cerrarSesion()">
           <svg class="bi me-2" width="16" height="16"></svg>
-          <img src="../../../assets/icos/exit.png"  width="50" height="50"> Cerrar sesión
+          <img src="../../../assets/icos/exit.png"  width="50" height="50">  <span mouseDirectiva>Cerrar sesión</span>
         </a>
       </li>
     </ul>
@@ -91,6 +91,7 @@
         La Clínica cuenta actualmente con 6 consultorios, dos laboratorios(físicos en la clínica), y una sala de espera general. También ofrece una amplia gama de servicios de alta calidad y tecnología, dentro de un confortable ambiente recientemente renovado.
         Está abierta al público de Lunes a Viernes en el horario de 8:00 hs a 19:00 hs, y los sábados en el horario de 8:00 a 14:00 hs.
       </p>
+
      <app-carousel></app-carousel>
     </div>
   </div>

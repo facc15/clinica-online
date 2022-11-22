@@ -52,33 +52,40 @@ export class SeccionUsuariosComponent implements OnInit {
       for (let index = 0; index < this.listaUsuarios.length; index++)
       {
 
-        this.firestore.traerFotos().then( async response=>{
-          for(let item2 of response.items)
-          {
-            const url=await getDownloadURL(item2);
-
-            if(this.listaUsuarios)
+        try {
+          this.firestore.traerFotos().then( async response=>{
+            for(let item2 of response.items)
             {
+              const url=await getDownloadURL(item2);
 
-              if(this.listaUsuarios[index].pathPerfil==item2.name)
+              if(this.listaUsuarios)
               {
-                this.listaUsuarios[index].pathPerfil=url;
-              }
 
-              if(this.listaUsuarios[index].perfil=='especialista')
-              {
-                let especialista =<Especialista>this.listaUsuarios[index];
-
-                if(!especialista.verificacionAdmin)
+                if(this.listaUsuarios[index].pathPerfil==item2.name)
                 {
-                  this.listaUsuarios= this.listaUsuarios.filter((usu)=>usu.uid!=especialista.uid);
+                  this.listaUsuarios[index].pathPerfil=url;
+                }
+
+                if(this.listaUsuarios[index].perfil=='especialista')
+                {
+                  let especialista =<Especialista>this.listaUsuarios[index];
+
+                  if(!especialista.verificacionAdmin)
+                  {
+                    this.listaUsuarios= this.listaUsuarios.filter((usu)=>usu.uid!=especialista.uid);
+                  }
                 }
               }
+
             }
 
-          }
+            }).catch(error=>{console.log(error);});
 
-          }).catch(error=>{console.log(error);});
+        } catch (error)
+        {
+
+        }
+
       }
 
 

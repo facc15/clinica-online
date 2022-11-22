@@ -4,7 +4,7 @@
 
     <div class="col-6">
       <div class="miCard card mt-2 justify-content-center d-flex align-items-center" style="width: 18rem;" *ngFor="let paciente of this.listaPacientes | filtroPacientesEspecialista" (click)="pacienteSeleccionado(paciente)">
-        <img [src]="paciente.pathPerfil" class="card-img-top" width="70px" height="120px">
+        <img imagenDirectiva [tipoImagen]="'perfilPaciente'" [src]="paciente.pathPerfil" class="card-img-top" width="70px" height="120px">
         <div class="card-body text-center">
         <h4 class="card-title" >Paciente: {{paciente.nombre}} {{paciente.apellido}}</h4>
 

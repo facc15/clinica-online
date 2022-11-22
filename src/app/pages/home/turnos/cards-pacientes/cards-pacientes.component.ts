@@ -1,9 +1,11 @@
+import { ImagenDirective } from './../../../../directivas/imagen.directive';
 import { TurnoService } from 'src/app/servicios/turnos.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Paciente } from 'src/app/clases/usuario';
 import { FirestoreService } from 'src/app/servicios/firestore.service';
 import { Turno } from 'src/app/interfaces/turno';
 import { getDownloadURL } from '@angular/fire/storage';
+
 
 @Component({
   selector: 'app-cards-pacientes',

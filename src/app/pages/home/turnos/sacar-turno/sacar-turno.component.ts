@@ -96,18 +96,25 @@ export class SacarTurnoComponent implements OnInit {
   for (let index = 0; index < this.auth.especialidades.length; index++)
   {
 
-    this.firestore.traerFotosEspecialidades().then( async response=>{
-      for(let item of response.items)
-      {
-        const url=await getDownloadURL(item);
-        const especialidad=item.name.split('.');
+    try {
+      this.firestore.traerFotosEspecialidades().then( async response=>{
+        for(let item of response.items)
+        {
+          const url=await getDownloadURL(item);
+          const especialidad=item.name.split('.');
 
-          if(this.auth.especialidades[index].especialidad==especialidad[0])
-          this.auth.especialidades[index].pathEspecialidad=url;
+            if(this.auth.especialidades[index].especialidad==especialidad[0])
+            this.auth.especialidades[index].pathEspecialidad=url;
 
-      }
+        }
 
-      }).catch(error=>{console.log(error);});
+        }).catch(error=>{console.log(error);});
+
+    } catch (error)
+    {
+
+    }
+
   }
   const lista=Array();
   this.firestore.obtenerEspecialistas().then((res)=>{

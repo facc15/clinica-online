@@ -26,14 +26,14 @@
   <div @animacionBotones class="row justify-content-center d-flex" *ngIf="this.porEspecialidad">
     <h3 class="text-center">Seleccione especialidad</h3>
     <div class="col-12 h-25 d-flex justify-content-center" *ngFor="let  especialidad of this.auth.especialidades">
-      <button  class="mt-1 btn btn-info btn-lg text-center" style="border-radius:100%;"><img [src]="especialidad.pathEspecialidad" height="30" width="50" (click)="seleccionaEspecialidad(especialidad)"> </button>
+      <button  class="mt-1 btn btn-info btn-lg text-center" style="border-radius:100%;"><img imagenDirectiva [tipoImagen]="'especialidad'" [src]="especialidad.pathEspecialidad" height="30" width="50" (click)="seleccionaEspecialidad(especialidad)"> </button>
     </div>
   </div>
 <!--POR ESPECIALISTA-->
   <div @animacionBotones class="row justify-content-center d-flex" *ngIf="this.porEspecialista">
     <h3 class="text-center">Seleccione especialista</h3>
     <div class="col-12 h-25 d-flex justify-content-center" *ngFor="let  especialista of this.listaEspecialistasFiltrados">
-      <button  class="mt-1 btn btn-info btn-lg text-center" style="width: 150px; height: 130px; border-radius:100%;"  (click)="seleccionarEspecialista(especialista)"><img [src]="especialista.pathPerfil" height="50" width="80" style="border-radius:100%;"><br>{{especialista.nombre}} {{especialista.apellido}}</button>
+      <button  class="mt-1 btn btn-info btn-lg text-center" style="width: 150px; height: 130px; border-radius:100%;"  (click)="seleccionarEspecialista(especialista)"><img ImagenDirectiva [src]="especialista.pathPerfil" height="50" width="80" style="border-radius:100%;"><br>{{especialista.nombre}} {{especialista.apellido}}</button>
     </div>
   </div>
 <!--POR DIA-->
@@ -76,14 +76,14 @@
   <div @animacionBotones class="row justify-content-center d-flex" *ngIf="this.porEspecialidad">
     <h3 class="text-center">Seleccione especialidad</h3>
     <div class="col-12 h-25 d-flex justify-content-center" *ngFor="let  especialidad of this.auth.especialidades">
-      <button  class="mt-1 btn btn-info btn-lg text-center" style="border-radius:100%;"><img [src]="especialidad.pathEspecialidad" height="30" width="50" (click)="seleccionaEspecialidad(especialidad)"> </button>
+      <button  class="mt-1 btn btn-info btn-lg text-center" style="border-radius:100%;"><img imagenDirectiva [tipoImagen]="'especialidad'" [src]="especialidad.pathEspecialidad" height="30" width="50" (click)="seleccionaEspecialidad(especialidad)"> </button>
     </div>
   </div>
 <!--POR ESPECIALISTA-->
   <div @animacionBotones class="row justify-content-center d-flex" *ngIf="this.porEspecialista">
     <h3 class="text-center">Seleccione especialista</h3>
     <div class="col-12 h-25 d-flex justify-content-center" *ngFor="let  especialista of this.listaEspecialistasFiltrados">
-      <button  class="mt-1 btn btn-info btn-lg text-center" style="width: 150px; height: 130px; border-radius:100%;"  (click)="seleccionarEspecialista(especialista)"><img [src]="especialista.pathPerfil" height="50" width="80" style="border-radius:100%;"><br>{{especialista.nombre}} {{especialista.apellido}}</button>
+      <button  class="mt-1 btn btn-info btn-lg text-center" style="width: 150px; height: 130px; border-radius:100%;"  (click)="seleccionarEspecialista(especialista)"><img ImagenDirectiva [src]="especialista.pathPerfil" height="50" width="80" style="border-radius:100%;"><br>{{especialista.nombre}} {{especialista.apellido}}</button>
     </div>
   </div>
 <!--POR PACIENTE-->
