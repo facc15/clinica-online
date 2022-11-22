@@ -20,7 +20,7 @@ export class TurnosPacientePipe implements PipeTransform {
 
 
    this.turnosFiltrados=turnos.filter(turno=>turno.uidPaciente==this.auth.usuarioLog.uid);
-    console.log(this.turnosFiltrados);
+
     return this.turnosFiltrados;
   }
 
