@@ -43,7 +43,7 @@ export class SeccionUsuariosComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    try {
     this.firestore.obtenerUsuarios().subscribe(res=>{
       this.listaUsuarios=res;
 
@@ -52,7 +52,7 @@ export class SeccionUsuariosComponent implements OnInit {
       for (let index = 0; index < this.listaUsuarios.length; index++)
       {
 
-        try {
+
           this.firestore.traerFotos().then( async response=>{
             for(let item2 of response.items)
             {
@@ -81,17 +81,13 @@ export class SeccionUsuariosComponent implements OnInit {
 
             }).catch(error=>{console.log(error);});
 
-        } catch (error)
-        {
-
         }
 
-      }
-
-
-
     });
+  }catch (error)
+    {
 
+    }
   }
 
   irAHistoriaClinica(usuario: Usuario)
@@ -118,7 +114,7 @@ export class SeccionUsuariosComponent implements OnInit {
       workbook.SheetNames.push('Hoja paciente 1');
       var ws = workbook.Sheets["Sheet1"];
 
-
+      //después de cada "," siguiente columna.
       this.data.push(["Turno","Especialista"]);
 
       for (const turno of this.turnosFiltrados)
@@ -128,14 +124,13 @@ export class SeccionUsuariosComponent implements OnInit {
 
       }
 
+      //Primero transformar a string de json y despues parsear a json.
       const jsonPacientes = JSON.parse(JSON.stringify(this.data));
 
       ws=XLSX.utils.json_to_sheet(jsonPacientes);
       workbook.Sheets["Hoja paciente 1"]=ws;
 
       XLSX.writeFile(workbook,this.turnosFiltrados[0].paciente+'.xlsx');
-
-
 
     }else if(usuario.perfil=='especialista')
     {
@@ -147,7 +142,7 @@ export class SeccionUsuariosComponent implements OnInit {
       workbook.SheetNames.push('Hoja especialista 1');
       var ws = workbook.Sheets["Sheet1"];
 
-
+      //después de cada "," siguiente columna.
       this.data.push(["Turno","Paciente"]);
 
       for (const turno of this.turnosFiltrados)
@@ -170,6 +165,7 @@ export class SeccionUsuariosComponent implements OnInit {
 
   }
 
+  //Escribir y descargar solo tabla
   descargarEnExcel()
   {
     this.tabla= document.getElementById('tabla');
@@ -204,7 +200,5 @@ export class SeccionUsuariosComponent implements OnInit {
     this.registrarAdmin=false;
     this.registrado=event;
   }
-
-
 
 }

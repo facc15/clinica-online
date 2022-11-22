@@ -1,4 +1,3 @@
-import { Especialidades } from 'src/app/interfaces/especialidades';
 import { Fecha } from 'src/app/clases/fecha';
 import { HistoriaClinica } from './historia-clinica';
 export interface Turno {

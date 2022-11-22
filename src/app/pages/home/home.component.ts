@@ -91,8 +91,6 @@ export class HomeComponent implements OnInit {
 
     const user= await this.auth.getState();
 
-
-
         this.usuarios.subscribe(res=>{
 try {
   for(let item of res)
@@ -135,10 +133,7 @@ try {
 
 }
 
-        });
-
-
-
+     });
 
   }
 

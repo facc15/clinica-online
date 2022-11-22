@@ -288,17 +288,10 @@ export class MisTurnosComponent implements OnInit {
         this.router.navigateByUrl('pages/home');
       }, 1500);
 
-}).catch(()=>this.spinner=false);
-
-
-
+      }).catch(()=>this.spinner=false);
     }
 
-
-
   }
-
-
 
 }
 

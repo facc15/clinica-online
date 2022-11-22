@@ -39,8 +39,6 @@ export class TablaFechasComponent implements OnInit {
       }
     }
 
-    console.log("traje a "+this.especialista.nombre);
-
   }
 
   elegirFecha(fecha: Fecha)

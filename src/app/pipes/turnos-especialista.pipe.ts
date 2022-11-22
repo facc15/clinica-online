@@ -16,11 +16,8 @@ export class TurnosEspecialistaPipe implements PipeTransform {
     try
     {
       this.turnosFiltrados=turnos.filter(turno=>turno.uidEspecialista==this.auth.usuarioLog.uid);
-
     }catch{
-
     }
-
 
     return this.turnosFiltrados;
   }

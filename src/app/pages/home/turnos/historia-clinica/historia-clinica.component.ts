@@ -39,15 +39,19 @@ export class HistoriaClinicaComponent implements OnInit {
       'valor3':['',],
     });
 
-
-
-    this.historiaClinica= {altura:{},peso:{},temperatura:{},presion:{},datoDinamico1:{},datoDinamico2:{},datoDinamico3:{},informe:{}} as HistoriaClinica;
+    this.historiaClinica= {altura:{},
+                          peso:{},
+                          temperatura:{},
+                          presion:{},
+                          datoDinamico1:{},
+                          datoDinamico2:{},
+                          datoDinamico3:{},
+                          informe:{}} as HistoriaClinica;
 
   }
 
   ngOnInit(): void
   {
-
   }
 
   irAAgregarDatos()

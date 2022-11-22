@@ -45,7 +45,7 @@ export class TurnosEspecialistaPacienteOrdenadoPipe implements PipeTransform
        return 0;
       }
    });
-
+//Si es 3 elimino al resto y muestro los ultimos 3.
    if(this.turnosFiltradosOrdenados.length>3)
    {
     this.turnosFiltradosOrdenados.splice(3);

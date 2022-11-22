@@ -33,7 +33,7 @@ export class RegistroComponent implements OnInit {
 
   public obrasSociales=['Elsieland','LaCasona','ClubXXI','Levento','Traxx','LaZona','Otra'];
 
-  constructor(private toastr: ToastrService,public form: FormBuilder, private auth: AuthService,private router: Router,public firestore: FirestoreService)
+  constructor(private toastr: ToastrService,public form: FormBuilder, private auth: AuthService,public firestore: FirestoreService)
   {
     this.paciente=new Paciente("","","",0,0,"","","","","");
     this.especialista=new Especialista("","","",0,0,"","","","");
@@ -49,7 +49,7 @@ export class RegistroComponent implements OnInit {
 
     if(this.perfil=='paciente')
     {
-      console.log(this.perfil);
+
       this.formGroup=this.form.group({
         nombre:['', [Validators.required]],
         apellido:['',[Validators.required]],
@@ -275,10 +275,6 @@ export class RegistroComponent implements OnInit {
   {
     this.firestore.file2= $event.target.files[0];
   }
-
-
-
-
 
   irALogin()
   {

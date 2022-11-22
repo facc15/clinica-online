@@ -7,22 +7,17 @@ import { Turno } from 'src/app/interfaces/turno';
   templateUrl: './ver-resenia.component.html',
   styleUrls: ['./ver-resenia.component.css']
 })
-export class VerReseniaComponent implements OnInit {
+export class VerReseniaComponent {
 
   @Output() eventoVolver=new EventEmitter<void>();
   @Input() turno!: Turno;
 
 
   constructor() {
-    console.log('yaca');
-  }
-
-  ngOnInit(): void {
   }
 
   volver()
   {
     this.eventoVolver.emit();
   }
-
 }

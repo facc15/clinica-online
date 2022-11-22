@@ -44,7 +44,6 @@ export class TurnosEspecialidadComponent implements OnInit {
     if(this.especialidad)
     {
       this.turnosFiltrados= this.turnos.filter(turno=>turno.especialidad.especialidad==this.especialidad);
-      //console.log(this.turnosFiltrados);
 
     }else if(this.estado)
     {
@@ -52,7 +51,7 @@ export class TurnosEspecialidadComponent implements OnInit {
     }else if(this.fecha)
     {
       this.turnosFiltrados=this.turnos.filter(turno=>turno.fecha.diaNumero==this.fecha.diaNumero && turno.fecha.mes==this.fecha.mes);
-      console.log(this.turnosFiltrados);
+
     }else
     {
       this.turnosFiltrados=this.turnos;

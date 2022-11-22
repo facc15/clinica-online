@@ -14,7 +14,7 @@ export class FechaService {
   {
    const hoy=new Date();
    hoy.getDate();
-          //const fechaFormato=format(hoy,'EEEE dd MMMM - HH:mm aaa', { locale: es });
+
    const dia=format(hoy,'EEEE',{locale:es});
    const numero=format(hoy,'dd',{locale:es});
    const mes=format(hoy,'MMMM',{locale:es});

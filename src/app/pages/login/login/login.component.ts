@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   private correo:string;
   private pass:string;
 
-  constructor(private form: FormBuilder,private auth: AuthService,private router:Router) {
+  constructor(private form: FormBuilder,private auth: AuthService) {
     this.correo="";
     this.pass="";
     this.spinner=false;

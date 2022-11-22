@@ -9,7 +9,6 @@ import { Usuario, Especialista, Paciente } from 'src/app/clases/usuario';
 import { Component, Input, OnInit } from '@angular/core';
 import { Fecha } from 'src/app/clases/fecha';
 import { getDownloadURL } from '@angular/fire/storage';
-import { arrayRemove } from '@firebase/firestore';
 import { style,state, transition, trigger, animate } from '@angular/animations';
 
 @Component({
@@ -139,8 +138,6 @@ export class SacarTurnoComponent implements OnInit {
               {
                 this.listaEspecialistas[index].pathPerfil=url;
               }
-
-
           }});
         }
 
@@ -152,7 +149,6 @@ export class SacarTurnoComponent implements OnInit {
 
   seleccionaEspecialidad(especialidad: Especialidades)
   {
-    console.log('se eligio a '+especialidad.especialidad);
     this.especialidadSeleccionada=especialidad;
     this.porEspecialidad=false;
     this.porEspecialista=true;

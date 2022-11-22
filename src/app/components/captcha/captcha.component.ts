@@ -28,7 +28,6 @@ export class CaptchaComponent implements OnInit {
   generarNumRandom()
   {
       let random= Math.floor(Math.random() * (31-1) + 1);
-
      return random;
   }
 
@@ -65,8 +64,6 @@ export class CaptchaComponent implements OnInit {
         }, 1000);
       }
     }, 2000);
-
-
   }
 
 }

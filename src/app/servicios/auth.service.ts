@@ -171,8 +171,6 @@ export class AuthService {
           progressAnimation: 'decreasing',
           positionClass: 'toast-top-center'});
         });
-
-
   }
 
 
@@ -199,9 +197,7 @@ export class AuthService {
           return 'Error desconocido';
 
     }
-
   }
-
 
   async desloguear(){
     const auth = getAuth();
@@ -213,8 +209,5 @@ export class AuthService {
     }
 
   }
-
-
-
 
 }

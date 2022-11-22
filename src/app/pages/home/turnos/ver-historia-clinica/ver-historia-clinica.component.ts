@@ -26,7 +26,6 @@ export class VerHistoriaClinicaComponent implements OnInit {
   {
     this.turnoService.obtenerTurnos().subscribe((turnos)=>{
      this.turnos=turnos.filter((turno)=>turno.uidPaciente==this.paciente.uid && turno.estado=='finalizado');
-      console.log(this.turnos);
     });
   }
 

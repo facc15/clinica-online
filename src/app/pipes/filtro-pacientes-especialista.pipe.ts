@@ -41,7 +41,6 @@ export class FiltroPacientesEspecialistaPipe implements PipeTransform {
           {
             if(!this.pacientes.includes(paciente))
             this.pacientes.push(paciente);
-
           }
         });
         });

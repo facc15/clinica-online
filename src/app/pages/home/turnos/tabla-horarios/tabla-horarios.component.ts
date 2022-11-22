@@ -43,8 +43,6 @@ export class TablaHorariosComponent implements OnInit {
       {
         this.horariosOcupados.push(turno.fecha.hora);
       }
-      console.log(this.horariosOcupados);
-
 
       for (let index = 0; index < this.horarios.length; index++)
       {

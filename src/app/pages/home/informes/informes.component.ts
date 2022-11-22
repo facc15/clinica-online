@@ -247,7 +247,7 @@ export class InformesComponent implements OnInit {
         this.datas[index].y=cantidadLogs;
     });
 
-    console.log(this.datas);
+
     this.chartOptions={
       credits:{
         enabled:false,
@@ -725,10 +725,6 @@ for (const turno of this.turnosPorLapsoDeTiempo)
     fechaElegida.mesInicio=this.form.value.mesInicio;
     fechaElegida.diaFinal=this.form.value.diaFinal;
     fechaElegida.mesFinal=this.form.value.mesFinal;
-
-
-    console.log(fechaElegida);
-
 
     for (const turno of this.turnosOrdenadosPorDia)
     {
